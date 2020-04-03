@@ -1,0 +1,19 @@
+{
+    "name": "limostr/eval-lib",
+    "description": "Library for evaluation with models descreption",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oussama Limam",
+            "email": "oussama.limam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Limostr\\EvalLib\\": "src/"
+        }
+    },
+    "minimum-stability": "beta",
+    "require": {}
+}

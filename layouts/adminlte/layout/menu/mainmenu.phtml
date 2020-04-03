@@ -1,0 +1,28 @@
+<?php
+declare(strict_types = 1);
+?>
+
+<script>
+    $(document).ready(function () {
+        var ActiveUrl = $(location).attr('pathname');
+        $("li a[href='" + ActiveUrl + "']").parent().parent().parent().addClass("active");
+        $("li a[href='" + ActiveUrl + "']").parent().addClass("active");
+    });
+
+</script>
+<li class="header"><i class="fa fa-circle-o fa-university text-aqua"></i> <span><?=utf8_encode('UVT')?></span></li>
+<li><a href="#"><i class="fa fa-dashboard text-red"></i><span>Tabeau de bord</span></a></li>
+
+<li id="tree"  >
+
+
+</li>
+
+<li>
+    <a href="#"> <i class="fa fa-user-md text-red"></i> <span>Administration</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <?php echo $this->adminmenu?>
+
+</li>
+
+
+

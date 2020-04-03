@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UVT</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <?=\Limostr\Tools\Template::GenView("layout/css",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/js",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/scriptjs",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/table",'layouts/adminlte/map_template.php')?>
+
+ </head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+ <?php
+ /*$temp=$this->viewModel()->getCurrent()->getChildren()[0]->getTemplate();
+ $array = explode("/",$temp);
+ $CURRENT_MODULE_NAME=$array[0];*/
+
+ ?>
+<div class="wrapper">
+    <header class="main-header">
+        <?=\Limostr\Tools\Template::GenView("layout/header",'layouts/adminlte/map_template.php' )?>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar" id="mainsidebar">
+        <?php $string=""?>
+<?=\Limostr\Tools\Template::GenView("layout/mainsidebar",'layouts/adminlte/map_template.php' ,array('menuadmin'=>$string) )?>
+    <!-- /.sidebar -->
+
+
+    </aside>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+           <!-- Add this!!  -->
+        <section class="content-header">
+            <h1>
+                <?=isset($titre) ? $titre : ""?>
+                <small><?=isset($desc_titre) ? $desc_titre : ""?></small>
+            </h1>
+            <div class="breadcrumb">
+
+            </div>
+
+        </section>
+       <!-- Main content -->
+        <section class="content" id="principalecontent">
+
+            <div id="submenue" class="nav-tabs-custom" >
+
+            </div>
+
+            <div class="row" id="pcontent">
+
+
+                <div class="col-md-12" id="maincontent" style="min-height: 500px;width: auto;max-width: 100%;min-width: 100%;"  class="box">
+                    <?php echo $this->content; ?>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <!-- /.content-wrapper -->
+    <footer class="main-footer" id="mainfooter">
+        <?=\Limostr\Tools\Template::GenView("layout/footer",'layouts/adminlte/map_template.php')?>
+
+     </footer>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark" id="controlsidebar">
+        <?=\Limostr\Tools\Template::GenView("layout/controlsidebar",'layouts/adminlte/map_template.php')?>
+
+     </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<!-- AdminLTE for demo purposes -->
+<?php echo $this->headScript()->setFile('/admin/dist/js/demo.js');?>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal"  >
+    <div class="modal-dialog" style="width:auto;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titremodal">Gestion</h4>
+            </div>
+            <div class="modal-body" id="formcontent">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+</html>

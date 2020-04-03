@@ -1,0 +1,14 @@
+<li>
+    <a href="#"><i class="<?=$this->icone?>"></i><?=$this->TITLEMENUE?><i class="fa fa-angle-left pull-right"></i></a>
+    <ul class="treeview-menu">
+
+        <?php foreach($this->SUBMENUE as $keymenu => $menu):?>
+            <?php
+                $arg=array("titre"=>$menu['titre'],"uri"=>$menu['uri'],"icone"=>$menu['icone']);
+            ?>
+            <?=\Limostr\Tools\Template::GenView("layout/elementmenu",'layouts/adminlte/map_template.php',$arg)?>
+
+
+        <?php endforeach;?>
+    </ul>
+</li>

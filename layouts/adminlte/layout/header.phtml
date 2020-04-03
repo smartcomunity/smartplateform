@@ -1,0 +1,59 @@
+<?php
+declare(strict_types = 1);
+/**
+ * Created by PhpStorm.
+ * User: username
+ * Date: 05/01/2016
+ * Time: 16:51
+ */
+
+
+
+?>
+
+<!-- Logo -->
+<a href="#" class="logo">
+    <!-- mini logo for sidebar mini 50x50 pixels -->
+    <span class="logo-mini">
+        <object data="/ressources/images/logo-mini.svg" type="image/svg+xml"></object>
+
+    </span>
+    <!-- logo for regular state and mobile devices -->
+    <span class="logo-lg">
+        <object data="/ressources/images/logo.svg" type="image/svg+xml"></object>
+
+    </span>
+</a>
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+    </a>
+    <!---->
+    <!---->
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <?=\Limostr\Tools\Template::GenView("layout/usermessage",'layouts/adminlte/map_template.php')?>
+
+
+            <!-- Notifications: style can be found in dropdown.less -->
+            <?=\Limostr\Tools\Template::GenView("layout/usernotification",'layouts/adminlte/map_template.php')?>
+
+
+            <!-- Tasks: style can be found in dropdown.less -->
+            <?=\Limostr\Tools\Template::GenView("layout/usertasks",'layouts/adminlte/map_template.php')?>
+
+
+            <!-- User Account: style can be found in dropdown.less -->
+            <?=\Limostr\Tools\Template::GenView("layout/userinfo",'layouts/adminlte/map_template.php')?>
+
+
+            <!-- Control Sidebar Toggle Button -->
+            <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            </li>
+        </ul>
+    </div>
+</nav>

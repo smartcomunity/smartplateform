@@ -1,0 +1,33 @@
+
+<?php echo $this->headLink()->setStylesheet('/admin/plugins/datatables/extensions/Buttons/css/buttons.dataTables.min.css');?>
+
+<?php echo $this->headLink()->setStylesheet('/admin/plugins/datatables/extensions/FixedHeader/css/fixedHeader.dataTables.css');?>
+
+<?php echo $this->headLink()->setStylesheet('/admin/plugins/datatables/extensions/Responsive/css/responsive.dataTables.css');?>
+
+
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/jquery.dataTables.min.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/Buttons/js/dataTables.buttons.min.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/Responsive/js/dataTables.responsive.js');?>
+
+
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/dataTables.bootstrap.min.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/slimScroll/jquery.slimscroll.min.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/fastclick/fastclick.js');?>
+
+
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/Buttons/js/buttons.flash.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/Buttons/js/buttons.html5.js');?>
+<?php echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/Buttons/js/buttons.print.js');?>
+
+<?php //echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/FixedHeader/js/dataTables.rowReorder.mini.js');?>
+
+<?php // echo $this->headScript()->setFile('/admin/plugins/datatables/extensions/RowReorder/js/dataTables.fixedHeader.js');?>
+
+<script>
+
+    $(function () {
+        $("div.dt-buttons").attr('class','btn-group');
+    });
+
+</script>

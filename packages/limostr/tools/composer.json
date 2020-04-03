@@ -1,0 +1,19 @@
+{
+    "name": "limostr/tools",
+    "description": "tools for view layouts and other needs",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oussama Limam",
+            "email": "oussama.limam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Limostr\\Tools\\": "src/"
+        }
+    },
+    "minimum-stability": "beta",
+    "require": {}
+}

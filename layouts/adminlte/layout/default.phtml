@@ -1,0 +1,67 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>UVT</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.5 -->
+	<?=\Limostr\Tools\Template::GenView("layout/css",'layouts/adminlte/map_template.php')?>
+	<?=\Limostr\Tools\Template::GenView("layout/js",'layouts/adminlte/map_template.php')?>
+	<?=\Limostr\Tools\Template::GenView("layout/scriptjs",'layouts/adminlte/map_template.php')?>
+	<?=\Limostr\Tools\Template::GenView("layout/table",'layouts/adminlte/map_template.php')?>
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div class="wrapper">
+	<header class="main-header">
+		<?=\Limostr\Tools\Template::GenView("layout/header",'layouts/adminlte/map_template.php' )?>
+
+	</header>
+
+	<div class="content-wrapper" style="min-height: 228px;margin-left: 0px;">
+		<section class="content" id="principalecontent">
+			<div class="row" id="pcontent">
+				<section class="content">
+					<div class="col-md-12" id="maincontent" style="min-height: 100%;width: auto;max-width: 100%;min-width: 100%;"  class="box">
+						<?php  echo  $this->layout()->content  ; ?>
+					</div>
+				</section>
+			</div>
+		</section>
+	</div>
+	<!-- /.content-wrapper -->
+	<footer class="main-footer" id="mainfooter">
+		<?=\Limostr\Tools\Template::GenView("layout/footer",'layouts/adminlte/map_template.php')?>
+	</footer>
+
+	<div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+<!-- AdminLTE for demo purposes -->
+<?php echo $this->headScript()->setFile($this->baseUrl().'/admin/dist/js/demo.js');?>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal"  >
+	<div class="modal-dialog" style="width:auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="titremodal"></h4>
+			</div>
+			<div class="modal-body" id="formcontent">
+				<p>One fine body&hellip;</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+				<button type="button" class="btn btn-primary">Enregistrer</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</body>
+</html>

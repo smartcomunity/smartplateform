@@ -1,0 +1,8 @@
+<?php
+declare(strict_types = 1);
+foreach ($this->container as $page) : ?>
+   <?php $active = $page->isActive();?>
+    <li><a href="<?=$this->baseUrl($page->getHref())?>" class="<?=($active ? 'active' : '')?>" ><i class="fa fa-circle-o text-aqua"></i><span><?=$page->getLabel()?></span></a></li>
+<?php endforeach;?>
+
+

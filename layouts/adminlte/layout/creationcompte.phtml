@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>UVT Forma.gov </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <?=\Limostr\Tools\Template::GenView("layout/css",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/js",'layouts/adminlte/map_template.php')?>
+
+
+
+</head>
+<body class="hold-transition register-page"  style="background-color: #FFFFFF; background-image : url(/ressources/images/bg.svg);" style="background-color:  #1b5891;">
+
+<div class="register-box" style="width: 80%;">
+    <!-- /.login-logo -->
+    <div class="register-logo">
+        <a href="#" > <object data="/ressources/images/logo-color.svg" type="image/svg+xml" style="width: 100%;height: 100%;"></object></a>
+    </div>
+    <h2 style="text-align: center;">Vous êtes en train de faire votre inscription : </h2>
+     <div class="register-box-body" style=" background-color:rgba(134,151,172,0.6);">
+
+        <p class="login-box-msg"style="color:#FFFFFF;font-size: 3em;">
+            <?=$this->translate("enseignants_titre_creation_compte",null,$this->langue)?>
+         </p>
+        <div class="container-fluid" >
+            <?php if(!isset($this->sendedconfirmmail)){ ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php echo $this->content; ?>
+                    </div>
+
+
+                </div>
+            <?php } else {?>
+                <div>
+                    <h1><?=$this->sendedconfirmmail?></h1>
+                </div>
+            <?php }?>
+        </div>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+</body>
+</html>
