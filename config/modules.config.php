@@ -6,10 +6,10 @@
  * The previous config file has been stored in ./config/modules.config.old
  */
 return [
-    'Laminas\I18n',
-    'Laminas\Mvc\Plugin\FlashMessenger',
-    'Laminas\Form',
-    'Laminas\Navigation',
+    'Laminas\\I18n',
+    'Laminas\\Mvc\\Plugin\\FlashMessenger',
+    'Laminas\\Form',
+    'Laminas\\Navigation',
     'Laminas\\Mail',
     'Laminas\\Session',
     'Laminas\\Mvc\\Console',
@@ -32,10 +32,7 @@ return [
     'Laminas\\ApiTools\\Rest',
     'Laminas\\ApiTools\\Rpc',
     'Laminas\\ApiTools\\Versioning',
-     'Laminas\\DeveloperTools',
-   //  'SanSessionToolbar',
+    'Laminas\\DeveloperTools',
     'Application',
-    'Admin',
-    'Cursus',
-    'SetupParameters',
+    30 => 'SetupParameters',
 ];
