@@ -3,9 +3,10 @@ return [
      
     'service_manager' => [
         'factories' => [
-             Laminas\Db\Adapter\Adapter::class =>  Laminas\Db\Adapter\AdapterServiceFactory::class, 
+             \Laminas\Db\Adapter\Adapter::class =>  Laminas\Db\Adapter\AdapterServiceFactory::class, 
         ],
     ],
+
     'api-tools-content-negotiation' => [
         'selectors' => [],
     ],
@@ -39,4 +40,5 @@ return [
             ],
         ],
     ],
+ 
 ];

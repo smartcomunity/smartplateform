@@ -41,10 +41,11 @@ return [
     'service_manager' => [
         'factories' => [
             \SetupParameters\V1\Rest\SrvMetaCursus\SrvMetaCursusResource::class => \SetupParameters\V1\Rest\SrvMetaCursus\SrvMetaCursusResourceFactory::class,
-        //    'navigation' => \Laminas\Navigation\Service\DefaultNavigationFactory::class,
+           //   'navigation' => \Laminas\Navigation\Service\DefaultNavigationFactory::class,
        //     'SetupParameters_Navigator' =>  \SetupParameters\Navigator\Service\SetupParametersNavigationFactory::class,
-
+ 
         ],
+          
     ], 
     'router' => [
         'routes' => [
