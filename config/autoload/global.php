@@ -12,7 +12,7 @@ return [
     ],
     'db' => [
         'driver'  => 'pdo',
-        'dsn'     => 'mysql:dbname=smarteducation;host=localhost;charset=utf8;port=3309',
+        'dsn'     => 'mysql:dbname=smarteducation;host=localhost;charset=utf8;port=3306',
         'user'    => 'root',
         'pass'    => '',
         'driver_options' => array(
