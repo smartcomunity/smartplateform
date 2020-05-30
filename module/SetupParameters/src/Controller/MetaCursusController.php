@@ -11,6 +11,7 @@ namespace SetupParameters\Controller;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;  
 use Interop\Container\ContainerInterface;
+  
 /**
  * MetaCursus
  *
@@ -39,9 +40,12 @@ class MetaCursusController extends AbstractActionController
     public function indexAction()
     {
         $viewModel = new ViewModel(); 
-        $ContextListe= new \Models\Smarteducation\Model\MetacontextTable($this->adapter);
+        $ContextListe= new \Models\ExSmarteducation\ExMetacontextTable($this->adapter);
+       $all= $ContextListe->getContext();
+       $viewModel->all=$all;
         return $viewModel;                                                                                       return $viewModel;
     }
+
 
 
      /**
@@ -57,5 +61,5 @@ class MetaCursusController extends AbstractActionController
       //  $ContextListe= new \Models\Smarteducation\Model\MetacontextTable($this->adapter);
         return $viewModel;                                                                                       return $viewModel;
     }
-
+    
 }

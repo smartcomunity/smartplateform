@@ -34,6 +34,5 @@ return [
     'Laminas\\ApiTools\\Versioning',
     'Laminas\\DeveloperTools',
     'Application',
-    29 => 'Cursus',
-    'SetupParameters',
+    30 => 'SetupParameters',
 ];

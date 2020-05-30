@@ -2,10 +2,10 @@
 
 namespace Models\Smarteducation\Model;
 
-use Laminas\InputFilter\InputFilter;
-use Laminas\InputFilter\Factory as InputFactory;
-use Laminas\InputFilter\InputFilterAwareInterface;
-use Laminas\InputFilter\InputFilterInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
 
 
 class Elementmetapassruls implements InputFilterAwareInterface

@@ -1,52 +1,59 @@
 <?php
-
-namespace SetupParameters;
-use Laminas\Router\Http\Literal;
-use Laminas\Router\Http\Segment;
 return [
     'controllers' => [
-        'invokables' => [
-           //Controller\MetaCursusController::class => Controller\MetaCursusController::class,
-        ],
+        'invokables' => [],
         'factories' => [
-            Controller\MetaCursusController::class => Controller\MetaCursusControllerFactory::class,
-            Controller\UsersController::class => Controller\UsersControllerFactory::class,
-
+            \SetupParameters\Controller\MetaCursusController::class => \SetupParameters\Controller\MetaCursusControllerFactory::class,
+            \SetupParameters\Controller\UsersController::class => \SetupParameters\Controller\UsersControllerFactory::class,
         ],
     ],
-
     'view_manager' => [
-        'template_map' => include SETUP_PARAMETERS_MODULE_ROOT . '/template_map.php',
+        'template_map' => [
+            'layout/layout' => 'C:\\xampp\\htdocs\\smartplateform\\module\\SetupParameters/../../layouts/adminlte3/layout/layout.phtml',
+        ],
         'template_path_stack' => [
-            SETUP_PARAMETERS_MODULE_ROOT . '/view',
+            0 => 'C:\\xampp\\htdocs\\smartplateform\\module\\SetupParameters/view',
         ],
     ],
-
     'translator' => [
         'locale' => 'fr_FR',
         'translation_file_patterns' => [
-            [
+            0 => [
                 'type' => 'phpArray',
-                'base_dir' => __DIR__ . '/../language',
+                'base_dir' => 'C:\\xampp\\htdocs\\smartplateform\\module\\SetupParameters\\config/../language',
                 'pattern' => '%s.php',
             ],
         ],
     ],
     'navigation' => [
         'default' => [
-            include __DIR__ . '/../navigator/nav_setup_map.php',
+            0 => [
+                0 => [
+                    'label' => 'Home',
+                    'route' => 'setup',
+                ],
+                1 => [
+                    'label' => 'Gestion utilisateur',
+                    'route' => 'setup/users/index',
+                    'pages' => [
+                        0 => [
+                            'label' => 'Ajouter utilisateur',
+                            'route' => 'setup/users/add-user',
+                        ],
+                    ],
+                ],
+                2 => [
+                    'label' => 'Cursus',
+                    'route' => 'setup/cursus/index',
+                ],
+            ],
         ],
-       
     ],
     'service_manager' => [
         'factories' => [
             \SetupParameters\V1\Rest\SrvMetaCursus\SrvMetaCursusResource::class => \SetupParameters\V1\Rest\SrvMetaCursus\SrvMetaCursusResourceFactory::class,
-           //   'navigation' => \Laminas\Navigation\Service\DefaultNavigationFactory::class,
-       //     'SetupParameters_Navigator' =>  \SetupParameters\Navigator\Service\SetupParametersNavigationFactory::class,
- 
         ],
-          
-    ], 
+    ],
     'router' => [
         'routes' => [
             'setup-parameters.rest.srv-meta-cursus' => [
@@ -59,68 +66,66 @@ return [
                 ],
             ],
             'setup' => [
-                'type' =>  Literal::class ,
+                'type' => \Laminas\Router\Http\Literal::class,
                 'options' => [
                     'route' => '/setup',
-                    'defaults' => [ 
-                        'controller' => Controller\MetaCursusController::class,
+                    'defaults' => [
+                        'controller' => \SetupParameters\Controller\MetaCursusController::class,
                         'action' => 'index',
                     ],
                 ],
                 'may_terminate' => true,
                 'child_routes' => [
                     'cursus' => [
-                        'type' =>  Literal::class ,
+                        'type' => \Laminas\Router\Http\Literal::class,
                         'options' => [
                             'route' => '/cursus',
-                            'defaults' => [ 
-                                'controller' => Controller\MetaCursusController::class,
+                            'defaults' => [
+                                'controller' => \SetupParameters\Controller\MetaCursusController::class,
                                 'action' => 'index',
                             ],
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
                             'actions-cursus' => [
-                                'type' => Segment::class,
+                                'type' => \Laminas\Router\Http\Segment::class,
                                 'options' => [
                                     'route' => '/:action[/:id]',
-                                    'controller' => Controller\MetaCursusController::class,
-                                    'constraints' => [ 
+                                    'controller' => \SetupParameters\Controller\MetaCursusController::class,
+                                    'constraints' => [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                         'id' => '[0-9_-]*',
                                     ],
                                 ],
-                            ], 
+                            ],
                         ],
-                    ], 
+                    ],
                     'users' => [
-                        'type' =>  Literal::class ,
+                        'type' => \Laminas\Router\Http\Literal::class,
                         'options' => [
                             'route' => '/users',
-                            'defaults' => [ 
-                                'controller' => Controller\UsersController::class,
+                            'defaults' => [
+                                'controller' => \SetupParameters\Controller\UsersController::class,
                                 'action' => 'index',
                             ],
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
                             'actions-users' => [
-                                'type' => Segment::class,
+                                'type' => \Laminas\Router\Http\Segment::class,
                                 'options' => [
                                     'route' => '/:action[/:id]',
-                                    'controller' => Controller\UsersController::class,
-                                    'constraints' => [ 
+                                    'controller' => \SetupParameters\Controller\UsersController::class,
+                                    'constraints' => [
                                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                         'id' => '[0-9_-]*',
                                     ],
                                 ],
-                            ], 
+                            ],
                         ],
                     ],
                 ],
             ],
-            
-       
         ],
     ],
     'api-tools-versioning' => [
@@ -176,13 +181,46 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'setup-parameters.rest.srv-meta-cursus',
                 'route_identifier_name' => 'srv_meta_cursus_id',
-                'hydrator' => \Laminas\Hydrator\ArraySerializable::class,
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
             ],
             \SetupParameters\V1\Rest\SrvMetaCursus\SrvMetaCursusCollection::class => [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'setup-parameters.rest.srv-meta-cursus',
                 'route_identifier_name' => 'srv_meta_cursus_id',
                 'is_collection' => true,
+            ],
+        ],
+    ],
+    'api-tools-content-validation' => [
+        'SetupParameters\\V1\\Rest\\SrvMetaCursus\\Controller' => [
+            'input_filter' => 'SetupParameters\\V1\\Rest\\SrvMetaCursus\\Validator',
+        ],
+    ],
+    'input_filter_specs' => [
+        'SetupParameters\\V1\\Rest\\SrvMetaCursus\\Validator' => [
+            0 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'id',
+                'description' => 'Context id',
+                'error_message' => 'Context id  empty',
+            ],
+            1 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'labelMetaContext',
+                'description' => 'label MetaContext',
+                'error_message' => 'label MetaContext empty',
+            ],
+            2 => [
+                'required' => true,
+                'validators' => [],
+                'filters' => [],
+                'name' => 'DescMetaContext',
+                'description' => 'MetaContext description',
+                'error_message' => 'MetaContext description is empty',
             ],
         ],
     ],

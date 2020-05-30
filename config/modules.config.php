@@ -35,4 +35,5 @@ return [
     'Laminas\\DeveloperTools',
     'Application',
     30 => 'SetupParameters',
+    'SmartCursus',
 ];

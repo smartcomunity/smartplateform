@@ -6,10 +6,10 @@
 
 namespace Models\Smarteducation\Model;
 
-use Laminas\Db\TableGateway\AbstractTableGateway,
-    Laminas\Db\Adapter\Adapter,
-    Laminas\Db\ResultSet\ResultSet,
-    Laminas\Db\Sql\Select;
+use Zend\Db\TableGateway\AbstractTableGateway,
+    Zend\Db\Adapter\Adapter,
+    Zend\Db\ResultSet\ResultSet,
+    Zend\Db\Sql\Select;
 
 class MetacontextTable extends AbstractTableGateway
 {
