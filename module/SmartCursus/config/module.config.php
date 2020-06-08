@@ -181,7 +181,7 @@ return [
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
-            'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => 'Json',
             'SmartCursus\\V1\\Rest\\Elementmetacursus\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\Elementmetaprocess\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\Elementmetapassruls\\Controller' => 'HalJson',

@@ -20,7 +20,7 @@ class ElementmetapassrulsTable
     {
 $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
-foreach ($results as $key => $row) {
+/*foreach ($results as $key => $row) {
     $arr [] = array(
         'id'         => $row ['id'],
         'PassRulsDesc '     => $row ['PassRulsDesc '],
@@ -33,7 +33,8 @@ foreach ($results as $key => $row) {
     );
 
 }
-return $arr;
+return $arr;*/
+return $results;
     }
     public function fetch($id)
     {    

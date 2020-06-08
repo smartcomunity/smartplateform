@@ -19,7 +19,7 @@ class Metacontext
     {
 $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
-foreach ($results as $key => $row) {
+/*foreach ($results as $key => $row) {
     $arr [] = array(
         'id'         => $row ['id'],
         'labelMetaContext'     => $row ['labelMetaContext'],
@@ -28,7 +28,8 @@ foreach ($results as $key => $row) {
     );
 
 }
-return $arr;
+return $arr;*/
+return $results;
     }
     public function fetch2($data)
     {   //unset($arr1[""]);

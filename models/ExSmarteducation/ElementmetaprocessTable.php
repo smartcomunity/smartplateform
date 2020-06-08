@@ -2,34 +2,69 @@
 namespace Models\ExSmarteducation;
 use Laminas\Db\TableGateway\TableGateway;
 use Laminas\Db\Adapter\Adapter;
+use Laminas\Db\Sql\Sql;
 class ElementmetaprocessTable 
-{
+{  protected $arr=[];
     protected $adapter;
     protected $TableGateway;
+    protected $TableGateway2;
     public function __construct(Adapter $adapter)
     {        $this->adapter = $adapter;
-             $this->tabel=$tabel;
+            
              $this->TableGateway= new TableGateway('elementmetaprocess',$adapter);
+             $this->TableGateway2= new TableGateway('elementmetapassruls',$adapter);
 
     }
-    
+    public function fetchAll2()
+    {
+    $rowset = $this->TableGateway->select();
+    $results = $rowset->toArray();
+    foreach ($results as $key => $row) {
+    $id=$row['id'];
+    $rowset2 = $this->TableGateway2->select(['ElementMetaProcess_id' => $id]);
+    $results2 = $rowset2->toArray();
+    $arr [] = array(
+        'id'         => $row ['id'],
+        'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
+        'MetaContext_id' => $row ['MetaContext_id'],
+        'LabelMetaProcess '=> $row ['LabelMetaProcess'],
+        'DescMetaProcess' => $row ['DescMetaProcess'],
+        'Sp '         => $results2
+    );
+    //$p=array_search($id,array_keys($results));
+    //$row['sp']=$results2;
+    //return $row['sp'];
+
+}
+return $arr;
+}
+public function fetch2()
+    {   //unset($arr1[""]);
+        $sql    = new Sql($this->adapter);
+        $select = $sql->select();
+       /*$select->join(
+        'elementmetaprocess',              
+         ' id = elementmetapassruls.ElementMetaProcess_id',      
+         //['bar', 'baz'],     
+          $select::JOIN_OUTER 
+        );;*/
+       $select
+         ->from(['p' => 'elementmetaprocess'])     
+         ->join(
+        ['l' => 'elementmetapassruls'],        
+        'p.id = l.ElementMetaProcess_id'  
+        );
+//$select->where([$data=> $data]);
+$selectString = $sql->buildSqlString($select);
+$results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
+//return $results = $results->current();
+return $results ;
+    }
     public function fetchAll()
     {
 $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
-foreach ($results as $key => $row) {
-    $arr [] = array(
-        'id'         => $row ['id'],
-        'MetaProcessType_id'     => $row ['MetaProcessType_id'],
-        'MetaModelsWorker_id' => $row ['MetaModelsWorker_id'],
-        'MetaContext_id' => $row ['MetaContext_id'],
-        'LabelMetaProcess'         => $row ['LabelMetaProcess'],
-        'DescMetaProcess'         => $row ['DescMetaProcess'],
-        
-    );
-
-}
-return $arr;
+return $results;
     }
     public function fetch($id)
     {    

@@ -10,14 +10,14 @@ return [
     ],
     'db' => [
         'driver' => \pdo::class,
-        'dsn' => 'mysql:dbname=smarteducation;host=localhost;charset=utf8;port=3306',
+        'dsn' => 'mysql:dbname=smarteducation2;host=localhost;charset=utf8;port=3306',
         'user' => 'root',
         'pass' => '',
         'driver_options' => [
             1002 => 'SET NAMES \'UTF8\'',
         ],
         'adapters' => [
-            'smarteducation' => [],
+            'smarteducation2' => [],
         ],
     ],
     'router' => [
