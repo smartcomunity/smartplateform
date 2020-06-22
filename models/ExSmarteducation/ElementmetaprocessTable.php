@@ -12,19 +12,16 @@ class ElementmetaprocessTable
     {        $this->adapter = $adapter;
             
              $this->TableGateway= new TableGateway('elementmetaprocess',$adapter);
-             $this->TableGateway2= new TableGateway('linkedprocess',$adapter);
+             $this->TableGateway2= new TableGateway('elementmetapassruls',$adapter);
 
     }
     public function fetchAll2()
     {
-
-
-        $rowset = $this->TableGateway->select();
-        $results = $rowset->toArray();
-        
-foreach ($results as $key => $row) {
+    $rowset = $this->TableGateway->select();
+    $results = $rowset->toArray();
+    foreach ($results as $key => $row) {
     $id=$row['id'];
-    $rowset2 = $this->TableGateway2->select(['MetaProcess ' => $id]);
+    $rowset2 = $this->TableGateway2->select(['ElementMetaProcess_id' => $id]);
     $results2 = $rowset2->toArray();
     $arr [] = array(
         'id'         => $row ['id'],
@@ -34,42 +31,35 @@ foreach ($results as $key => $row) {
         'DescMetaProcess' => $row ['DescMetaProcess'],
         'Sp '         => $results2
     );
-    
     //$p=array_search($id,array_keys($results));
-    
     //$row['sp']=$results2;
     //return $row['sp'];
-    
 
 }
-
 return $arr;
 }
-    public function fetch2()
+public function fetch2()
     {   //unset($arr1[""]);
         $sql    = new Sql($this->adapter);
-$select = $sql->select();
-/*$select->join(
-    'elementmetaprocess',              
-    'id = elementmetapassruls.MetaProcess ',   
-    //['bar', 'baz'],     
-    $select::JOIN_OUTER 
-);;*/
-$select
-    ->from(['p' => 'elementmetaprocess'])     
-    ->join(
+        $select = $sql->select();
+       /*$select->join(
+        'elementmetaprocess',              
+         ' id = elementmetapassruls.ElementMetaProcess_id',      
+         //['bar', 'baz'],     
+          $select::JOIN_OUTER 
+        );;*/
+       $select
+         ->from(['p' => 'elementmetaprocess'])     
+         ->join(
         ['l' => 'elementmetapassruls'],        
-        'p.id = l.MetaProcess '  
-    );
-
+        'p.id = l.ElementMetaProcess_id'  
+        );
 //$select->where([$data=> $data]);
-
 $selectString = $sql->buildSqlString($select);
 $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
-        //return $results = $results->current();
-        return $results ;
+//return $results = $results->current();
+return $results ;
     }
-
     public function fetchAll()
     {
 $rowset = $this->TableGateway->select();

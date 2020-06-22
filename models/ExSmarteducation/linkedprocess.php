@@ -1,18 +1,17 @@
 <?php
  
 namespace Models\ExSmarteducation;
-use Laminas\Db\TableGateway\TableGateway;
-use Laminas\Db\Adapter\Adapter;
 
+    use Laminas\Db\TableGateway\TableGateway;
+    use Laminas\Db\Adapter\Adapter;
+    use Laminas\Db\Sql\Sql;
 
-class ElementmetapassrulsTable 
-{
-    protected $adapter;
+class linkedprocess
+{   protected $adapter;
     protected $TableGateway;
     public function __construct(Adapter $adapter)
     {        $this->adapter = $adapter;
-             $this->tabel=$tabel;
-             $this->TableGateway= new TableGateway('elementmetapassruls',$adapter);
+             $this->TableGateway= new TableGateway('linkedprocess',$adapter);
 
     }
     
@@ -20,21 +19,20 @@ class ElementmetapassrulsTable
     {
 $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
-/*foreach ($results as $key => $row) {
-    $arr [] = array(
-        'id'         => $row ['id'],
-        'PassRulsDesc '     => $row ['PassRulsDesc '],
-        'ElementMetaProcess_id  ' => $row ['ElementMetaProcess_id  '],
-        'ElementMetaProcess_id1'         => $row ['ElementMetaProcess_id1'],
-        'evenPassRuls '         => $row ['evenPassRuls '],
-        'PassRuls '         => $row ['PassRuls '],
-        'LabelPassRuls '         => $row ['LabelPassRuls '],
-        'PassRulsOrder'         => $row ['PassRulsOrder']
-    );
 
-}
-return $arr;*/
 return $results;
+    }
+    public function fetch2($data)
+    {   //unset($arr1[""]);
+        $sql    = new Sql($this->adapter);
+$select = $sql->select();
+$select->from('linkedprocess');
+$select->where([$data['name'] => $data['value']]);
+//$select->where([$data=> $data]);
+
+$selectString = $sql->buildSqlString($select);
+$results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
+        return $results = $results->current();
     }
     public function fetch($id)
     {    
@@ -43,12 +41,14 @@ return $results;
     }
     public function Create($data)
     { 
+        
         return $this->TableGateway->insert($data);
         /*$data['operation']='Created';
         return $data;*/
     }
     public function Update($data,$id)
     {   
+        
         return $this->TableGateway->update($data,['id' => $id],null);
     }
     public function Delete($id)
@@ -58,8 +58,6 @@ return $results;
                 ['id' => $id]);
            
     }
-
-
 
 
 }
