@@ -45,7 +45,9 @@
         "laminas/laminas-test": "^3.4",
         "laminas/laminas-view": "^2.11",
         "laminas/laminas-zendframework-bridge": "^1.0",
-        "san/san-session-toolbar": "^3.0"
+        "san/san-session-toolbar": "^3.0",
+        "zfr/zfr-cors": "1.*"
+        
     },
     "require-dev": {
         "laminas-api-tools/api-tools-admin": "^1.6",

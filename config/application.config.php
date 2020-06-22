@@ -9,6 +9,7 @@
 return [
     // Retrieve the list of modules for this application.
     'modules' => include __DIR__ . '/modules.config.php',
+    'ZfrCors',
     // This should be an array of paths in which modules reside.
     // If a string key is provided, the listener will consider that a module
     // namespace, the value of that key the specific path to that module's

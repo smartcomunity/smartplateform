@@ -33,6 +33,7 @@ return [
     'Laminas\\ApiTools\\Rpc',
     'Laminas\\ApiTools\\Versioning',
     'Laminas\\DeveloperTools',
+    'ZfrCors',
     'Application',
     30 => 'SetupParameters',
     'SmartCursus',
