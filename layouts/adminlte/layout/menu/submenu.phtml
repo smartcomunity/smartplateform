@@ -1,0 +1,10 @@
+<?php
+declare(strict_types = 1);
+foreach($this->SUBMENUE as $keymenu => $menu):?>
+    <?php
+    $arg=array("titre"=>$menu['titre'],"uri"=>$menu['uri'],"icone"=>$menu['icone']);
+    ?>
+
+    <?=\Limostr\Tools\Template::GenView("layout/elementmenu",'layouts/adminlte/map_template.php',$arg)?>
+
+<?php endforeach;?>

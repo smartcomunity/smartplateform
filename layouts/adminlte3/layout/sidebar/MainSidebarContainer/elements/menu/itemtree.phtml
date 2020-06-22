@@ -1,0 +1,13 @@
+<?=Limostr\Tools\Template::GenView("layout/LiHeader",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+<li class="nav-item has-treeview">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-chart-pie"></i>
+    <p>
+      Charts
+      <i class="right fas fa-angle-left"></i>
+    </p>
+  </a>
+  <ul class="nav nav-treeview">
+    <?=Limostr\Tools\Template::GenView("layout/SimpleLink",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+  </ul>
+</li>

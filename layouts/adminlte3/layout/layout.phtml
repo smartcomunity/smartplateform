@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SmartEducation ERP</title>
+  <!-- CSS -->
+  <?=Limostr\Tools\Template::GenView("layout/css",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+  <?=Limostr\Tools\Template::GenView("layout/js",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+<?=Limostr\Tools\Template::GenView("layout/MainNavbar",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+
+  <!-- Main Sidebar Container -->
+  <?=Limostr\Tools\Template::GenView("layout/MainSidebar",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+  <!-- Content Wrapper. Contains page content -->
+ 
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <?=Limostr\Tools\Template::GenView("layout/HeaderContent",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">  
+            <?php echo $this->content; ?>
+        </div> 
+    </section>
+    <!-- /.content -->
+  </div>
+
+  <!-- /.content-wrapper -->
+
+  <!-- main-footer -->
+  <?=Limostr\Tools\Template::GenView("layout/Footer",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+  <!-- /.main-footer -->
+
+
+  <!-- Control Sidebar --> 
+  <?=Limostr\Tools\Template::GenView("layout/ControlSidebar",  'layouts\adminlte3\map_template.php','layouts/adminlte3')?>
+
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+ 
+</body>
+</html>

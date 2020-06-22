@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>University UVT</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.5 -->
+    <?=\Limostr\Tools\Template::GenView("layout/css",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/js",'layouts/adminlte/map_template.php')?>
+    <?=\Limostr\Tools\Template::GenView("layout/scriptjs",'layouts/adminlte/map_template.php')?>
+
+
+</head>
+<body class="skin-blue-light layout-top-nav">
+
+<div class="wrapper">
+    <header class="main-header">
+        <?=\Limostr\Tools\Template::GenView("layout/header",'layouts/adminlte/map_template.php' )?>
+
+    </header>
+<!-- Left side column. contains the logo and sidebar -->
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper"  style="min-height: 277px;">
+    <!--div class="container"-->
+    <!-- Content Header (Page header) -->
+    <?php ///echo \Limostr\Tools\Template::GenView("layout/corps",'layouts/adminlte/map_template.php' )?>
+    <!-- Main content -->
+    <select class="form-control text-center" id="mainanneescolaire" name= "mainanneescolaire" style="z-index: 1000;">
+
+    </select>
+    <section class="content" id="principalecontent">
+
+        <div class="row" id="pcontent">
+
+            <div class="col-md-12" id="maincontent"  class="box">
+                <?php  echo  $this->layout()->content  ; ?>
+            </div>
+        </div>
+
+    </section>
+    <!--/div-->
+</div>
+<!-- /.content-wrapper -->
+<footer class="main-footer" id="mainfooter">
+    <?=\Limostr\Tools\Template::GenView("layout/footer",'layouts/adminlte/map_template.php' )?>
+</footer>
+<!-- Control Sidebar -->
+
+<!-- /.control-sidebar -->
+<!-- Add the sidebar's background. This div must be placed
+     immediately after the control sidebar -->
+<div class="control-sidebar-bg"></div>
+</div>
+
+
+
+</body>
+</html>

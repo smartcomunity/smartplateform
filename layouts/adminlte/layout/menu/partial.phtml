@@ -1,0 +1,34 @@
+<ul class="sidebar-menu">
+    <li class="header">MAIN NAVIGATION</li>
+    <?php $count = 0 ?>
+    <?php foreach ($this->container as $page): ?>
+
+        <?php if( ! $page->isVisible() || !$this->navigation()->accept($page)) continue; ?>
+        <?php $hasChildren = $page->hasPages() ?>
+        <?php if( ! $hasChildren): ?>
+            <li <?php if($page->isActive()) echo 'class="active treeview"'?>>
+                <a class="nav-header" href="<?php echo $page->getHref() ?>">
+                    <i class="fa fa-dashboard"></i><span> <?php echo $this->translate($page->getLabel()) ?> </span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+            </li>
+        <?php else: ?>
+            <li class="treeview">
+                <a  href="#">
+                    <i class="<?php echo $page->get("icon"); ?>"></i> <span>  <?php echo $this->translate($page->getLabel()) ?></span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu " id="page_<?php echo $count ?>">
+                    <?php foreach($page->getPages() as $child): ?>
+                        <?php // when using partials we need to manually check for ACL conditions ?>
+                        <?php if( ! $child->isVisible() || !$this->navigation()->accept($child)) continue; ?>
+                        <li>
+                            <a href="<?php echo $child->getHref() ?>">
+                                <i class="<?php echo $child->get("icon"); ?> "></i> <?php echo $this->translate($child->getLabel()) ?>
+                            </a>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </li>
+        <?php endif ?>
+        <?php $count++ ?>
+    <?php endforeach ?>
+</ul>
