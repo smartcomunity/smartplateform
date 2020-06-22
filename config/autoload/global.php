@@ -12,7 +12,7 @@ return [
         'driver' => \pdo::class,
         'dsn' => 'mysql:dbname=smarteducation2;host=localhost;charset=utf8;port=3306',
         'user' => 'root',
-        'pass' => 'Change',
+        'pass' => '',
         'driver_options' => [
             1002 => 'SET NAMES \'UTF8\'',
         ],
