@@ -24,7 +24,7 @@ class ElementmetaprocessTable
         
 foreach ($results as $key => $row) {
     $id=$row['id'];
-    $rowset2 = $this->TableGateway2->select(['MetaProcess ' => $id]);
+    $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
     $results2 = $rowset2->toArray();
     $arr [] = array(
         'id'         => $row ['id'],
@@ -46,28 +46,48 @@ foreach ($results as $key => $row) {
 return $arr;
 }
     public function fetch2()
-    {   //unset($arr1[""]);
-        $sql    = new Sql($this->adapter);
-$select = $sql->select();
-/*$select->join(
-    'elementmetaprocess',              
-    'id = linkedprocess.MetaProcess ',   
-    //['bar', 'baz'],     
-    $select::JOIN_OUTER 
-);;*/
-$select
+    {  //the new way 
+        $arr1 [] = array();
+        $arr2 [] = array();
+        $rowset = $this->TableGateway->select();
+        $results = $rowset->toArray();
+        
+foreach ($results as $key => $row) {
+    $id=$row['id'];
+    $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
+    $res= $rowset2->toArray();
+    if(empty($res))
+    {$arr1 [] = array(
+        'id'         => $row ['id'],
+        'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
+        'MetaContext_id' => $row ['MetaContext_id'],
+        'LabelMetaProcess '=> $row ['LabelMetaProcess'],
+        'DescMetaProcess' => $row ['DescMetaProcess'],
+    );}
+}
+$sql    = new Sql($this->adapter);
+        $select = $sql->select();
+        $select
     ->from(['p' => 'elementmetaprocess'])     
     ->join(
         ['l' => 'linkedprocess'],        
         'p.id = l.MetaProcess '  
     );
-
-//$select->where([$data=> $data]);
-
-$selectString = $sql->buildSqlString($select);
-$results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
-        //return $results = $results->current();
-        return $results ;
+    $selectString = $sql->buildSqlString($select);
+    $results2 = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
+    foreach ($results2 as $key => $row) {
+        $arr2 [] = array(
+            'id'         => $row ['id'],
+            'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
+            'MetaContext_id' => $row ['MetaContext_id'],
+            'LabelMetaProcess '=> $row ['LabelMetaProcess'],
+            'DescMetaProcess' => $row ['DescMetaProcess'],
+            'id' => $row ['id'],
+            'Linked' => $row ['Linked'],
+        );
+    }
+       $arr=array_merge($arr2, $arr1);
+       return $arr;
     }
 
     public function fetchAll()
