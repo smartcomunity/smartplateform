@@ -17,77 +17,37 @@ class ElementmetaprocessTable
     }
     public function fetchAll2()
     {
-
-
         $rowset = $this->TableGateway->select();
         $results = $rowset->toArray();
-        
+        //$arr[] = array();
 foreach ($results as $key => $row) {
     $id=$row['id'];
     $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
     $results2 = $rowset2->toArray();
     $arr [] = array(
-        'id'         => $row ['id'],
-        'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
-        'MetaContext_id' => $row ['MetaContext_id'],
-        'LabelMetaProcess '=> $row ['LabelMetaProcess'],
-        'DescMetaProcess' => $row ['DescMetaProcess'],
-        'Sp '         => $results2
+        'id'=> $row ['id'],
+        'MetaModelsWorker_id'=> $row ['MetaModelsWorker_id'],
+        'MetaContext_id'=> $row ['MetaContext_id'],
+        'LabelMetaProcess'=> $row ['LabelMetaProcess'],
+        'DescMetaProcess'=> $row ['DescMetaProcess'],
+        'Sp'=> $results2
     );
     
     //$p=array_search($id,array_keys($results));
     
     //$row['sp']=$results2;
     //return $row['sp'];
-    
-
 }
-
+//$arr=array_merge($results, $results2);
 return $arr;
 }
     public function fetch2()
-    {  //the new way 
-        $arr1 [] = array();
-        $arr2 [] = array();
-        $rowset = $this->TableGateway->select();
-        $results = $rowset->toArray();
-        
-foreach ($results as $key => $row) {
-    $id=$row['id'];
-    $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
-    $res= $rowset2->toArray();
-    if(empty($res))
-    {$arr1 [] = array(
-        'id'         => $row ['id'],
-        'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
-        'MetaContext_id' => $row ['MetaContext_id'],
-        'LabelMetaProcess '=> $row ['LabelMetaProcess'],
-        'DescMetaProcess' => $row ['DescMetaProcess'],
-    );}
-}
-$sql    = new Sql($this->adapter);
-        $select = $sql->select();
-        $select
-    ->from(['p' => 'elementmetaprocess'])     
-    ->join(
-        ['l' => 'linkedprocess'],        
-        'p.id = l.MetaProcess '  
+    {  
+    $results=$this->adapter->query(
+        'SELECT * FROM linkedprocess AS l RIGHT JOIN elementmetaprocess AS e ON l.MetaProcess=e.id',
+        Adapter::QUERY_MODE_EXECUTE
     );
-    $selectString = $sql->buildSqlString($select);
-    $results2 = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
-    foreach ($results2 as $key => $row) {
-        $arr2 [] = array(
-            'id'         => $row ['id'],
-            'MetaModelsWorker_id'     => $row ['MetaModelsWorker_id'],
-            'MetaContext_id' => $row ['MetaContext_id'],
-            'LabelMetaProcess '=> $row ['LabelMetaProcess'],
-            'DescMetaProcess' => $row ['DescMetaProcess'],
-            'id' => $row ['id'],
-            'Linked' => $row ['Linked'],
-        );
-    }
-       $arr=array_merge($arr2, $arr1);
-       return $arr;
+       return $results;
     }
 
     public function fetchAll()
