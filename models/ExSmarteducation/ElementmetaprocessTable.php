@@ -20,18 +20,27 @@ class ElementmetaprocessTable
         $rowset = $this->TableGateway->select();
         $results = $rowset->toArray();
         //$arr[] = array();
+        $i=0;
 foreach ($results as $key => $row) {
     $id=$row['id'];
     $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
     $results2 = $rowset2->toArray();
-    $arr [] = array(
+    $JSON = json_encode($results2);
+    $arr[$i]["id"]=$row ['id'];
+    $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
+    $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
+    $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
+    $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
+    $arr[$i]["Sp"]=$results2;
+    $i++;
+    /*$arr [] = array(
         'id'=> $row ['id'],
         'MetaModelsWorker_id'=> $row ['MetaModelsWorker_id'],
         'MetaContext_id'=> $row ['MetaContext_id'],
         'LabelMetaProcess'=> $row ['LabelMetaProcess'],
         'DescMetaProcess'=> $row ['DescMetaProcess'],
-        'Sp'=> $results2
-    );
+        'Sp'=> $JSON
+    );*/
     
     //$p=array_search($id,array_keys($results));
     
