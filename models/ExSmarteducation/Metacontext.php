@@ -77,8 +77,7 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
        if($max<$n)
        {$max=$n;}
      }
-     $array[0]["max"]=$max;
-     return $array;
+     return $max;
     }
 
 

@@ -54,8 +54,20 @@ return $results;
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(
-                ['id' => $id]);
+          return  $this->TableGateway->delete( ['id' => $id]);
            
+    }
+    public function FindLastElement()
+    {
+     $rowset = $this->TableGateway->select();
+     $results = $rowset->toArray();
+     $max=0;
+     foreach ($results as $key => $row) {
+       $id=$row['id'];
+       $n=intval($id);
+       if($max<$n)
+       {$max=$n;}
+     }
+     return $max;
     }
 }

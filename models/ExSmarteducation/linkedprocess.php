@@ -36,26 +36,36 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
     }
     public function fetch($id)
     {    
-        $rowset  = $this->TableGateway->select(['id' => $id]);
+        $rowset  = $this->TableGateway->select(['l_id' => $id]);
         return $Row   = $rowset->current();
     }
     public function Create($data)
     { 
-        
         return $this->TableGateway->insert($data);
-        /*$data['operation']='Created';
-        return $data;*/
     }
     public function Update($data,$id)
     {   
         
-        return $this->TableGateway->update($data,['id' => $id],null);
+        return $this->TableGateway->update($data,['l_id' => $id],null);
     }
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(['id' => $id]);
+          return  $this->TableGateway->delete(['l_id' => $id]);
            
+    }
+    public function FindLastElement()
+    {
+     $rowset = $this->TableGateway->select();
+     $results = $rowset->toArray();
+     $max=0;
+     foreach ($results as $key => $row) {
+       $id=$row['l_id'];
+       $n=intval($id);
+       if($max<$n)
+       {$max=$n;}
+     }
+     return $max;
     }
 
 

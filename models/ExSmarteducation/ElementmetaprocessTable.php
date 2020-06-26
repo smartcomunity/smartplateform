@@ -94,8 +94,7 @@ return $results;
       if($max<$n)
       {$max=$n;}
     }
-    $array[0]["max"]=$max;
-    return $array;
+    return $max;
    }
 
 }
