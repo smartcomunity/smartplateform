@@ -1,13 +1,17 @@
 <?php
-namespace SmartCursus\V1\Rest\MetacontextLastElement;
+namespace SmartCursus\V1\Rest\LastElement;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Models\ExSmarteducation\Metacontext;
-use Laminas\Db\Adapter\AdapterInterface;
+use Models\ExSmarteducation\ElementmetapassrulsTable;
+use Models\ExSmarteducation\ElementmetaprocessTable;
+use Models\ExSmarteducation\linkedprocess;
+use Models\ExSmarteducation\MetamodelsworkerTable;
 
-class MetacontextLastElementResource extends AbstractResourceListener
-{   public $array =[];
+use Laminas\Db\Adapter\AdapterInterface;
+class LastElementResource extends AbstractResourceListener
+{    public $array =[];
     private $adapter;
     public function __construct(AdapterInterface $adapter)
     { 
@@ -64,10 +68,23 @@ class MetacontextLastElementResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = [])
-    {   
-        $List= new Metacontext($this->adapter);
-        return $List->FindLastElement();;
-       
+    {
+        $List1= new Metacontext($this->adapter);
+        $array[0]["Metacontext LastElement"]=$List->FindLastElement();
+
+        $List2= new ElementmetapassrulsTable($this->adapter);
+        $array[1]["ElementmetapassrulsTable LastElement"]=$List->FindLastElement();
+
+        $List3=new ElementmetaprocessTable($this->adapter);
+        $array[2]["ElementmetaprocessTable LastElement"]=$List->FindLastElement();
+
+        $List4= new linkedprocess($this->adapter);
+        $array[3]["linkedprocess LastElement"]=$List->FindLastElement();
+
+        $List5= new MetamodelsworkerTable($this->adapter);
+        $array[4]["MetamodelsworkerTable LastElement"]=$List->FindLastElement();
+
+        return $array;
     }
 
     /**
