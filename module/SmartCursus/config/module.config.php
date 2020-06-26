@@ -8,6 +8,7 @@ return [
             \SmartCursus\V1\Rest\Elementmetapassruls\ElementmetapassrulsResource::class => \SmartCursus\V1\Rest\Elementmetapassruls\ElementmetapassrulsResourceFactory::class,
             \SmartCursus\V1\Rest\Metamodelsworker\MetamodelsworkerResource::class => \SmartCursus\V1\Rest\Metamodelsworker\MetamodelsworkerResourceFactory::class,
             \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessResource::class => \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessResourceFactory::class,
+            \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementResource::class => \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementResourceFactory::class,
         ],
     ],
     'router' => [
@@ -66,6 +67,15 @@ return [
                     ],
                 ],
             ],
+            'smart-cursus.rest.metacontext-last-element' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/metacontext-last-element[/:metacontext_last_element_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\MetacontextLastElement\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -76,6 +86,7 @@ return [
             3 => 'smart-cursus.rest.elementmetapassruls',
             4 => 'smart-cursus.rest.metamodelsworker',
             5 => 'smart-cursus.rest.linkedprocess',
+            6 => 'smart-cursus.rest.metacontext-last-element',
         ],
     ],
     'api-tools-rest' => [
@@ -211,6 +222,28 @@ return [
             'collection_class' => \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessCollection::class,
             'service_name' => 'linkedprocess',
         ],
+        'SmartCursus\\V1\\Rest\\MetacontextLastElement\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementResource::class,
+            'route_name' => 'smart-cursus.rest.metacontext-last-element',
+            'route_identifier_name' => 'metacontext_last_element_id',
+            'collection_name' => 'metacontext_last_element',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementCollection::class,
+            'service_name' => 'MetacontextLastElement',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -220,6 +253,7 @@ return [
             'SmartCursus\\V1\\Rest\\Elementmetapassruls\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\Metamodelsworker\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\Linkedprocess\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\MetacontextLastElement\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -252,6 +286,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'SmartCursus\\V1\\Rest\\MetacontextLastElement\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -275,6 +314,10 @@ return [
                 1 => 'application/json',
             ],
             'SmartCursus\\V1\\Rest\\Linkedprocess\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\MetacontextLastElement\\Controller' => [
                 0 => 'application/vnd.smart-cursus.v1+json',
                 1 => 'application/json',
             ],
@@ -352,6 +395,18 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'smart-cursus.rest.linkedprocess',
                 'route_identifier_name' => 'linkedprocess_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.metacontext-last-element',
+                'route_identifier_name' => 'metacontext_last_element_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\MetacontextLastElement\MetacontextLastElementCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.metacontext-last-element',
+                'route_identifier_name' => 'metacontext_last_element_id',
                 'is_collection' => true,
             ],
         ],

@@ -25,27 +25,22 @@ foreach ($results as $key => $row) {
     $id=$row['id'];
     $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
     $results2 = $rowset2->toArray();
-    $JSON = json_encode($results2);
     $arr[$i]["id"]=$row ['id'];
     $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
     $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
     $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
     $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
-    $arr[$i]["Sp"]=$results2;
+    $arr[$i]["model_type"]=$row ['model_type'];
+    $arr[$i]["Field"]=$row ['Field'];
+    $arr[$i]["Mention"]=$row ['Mention'];
+    $arr[$i]["Specialty"]=$row ['Specialty'];
+    $arr[$i]["Nb_years"]=$row ['Nb_years'];
+    $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
+    $arr[$i]["nb_units"]=$row ['nb_units'];
+    $arr[$i]["credit"]=$row ['credit'];
+    $arr[$i]["Lp"]=$results2;
     $i++;
-    /*$arr [] = array(
-        'id'=> $row ['id'],
-        'MetaModelsWorker_id'=> $row ['MetaModelsWorker_id'],
-        'MetaContext_id'=> $row ['MetaContext_id'],
-        'LabelMetaProcess'=> $row ['LabelMetaProcess'],
-        'DescMetaProcess'=> $row ['DescMetaProcess'],
-        'Sp'=> $JSON
-    );*/
     
-    //$p=array_search($id,array_keys($results));
-    
-    //$row['sp']=$results2;
-    //return $row['sp'];
 }
 //$arr=array_merge($results, $results2);
 return $arr;
@@ -61,8 +56,8 @@ return $arr;
 
     public function fetchAll()
     {
-$rowset = $this->TableGateway->select();
-$results = $rowset->toArray();
+  $rowset = $this->TableGateway->select();
+  $results = $rowset->toArray();
 return $results;
     }
     public function fetch($id)
@@ -88,6 +83,19 @@ return $results;
            
     }
 
-
+   public function FindLastElement()
+   {
+    $rowset = $this->TableGateway->select();
+    $results = $rowset->toArray();
+    $max=0;
+    foreach ($results as $key => $row) {
+      $id=$row['id'];
+      $n=intval($id);
+      if($max<$n)
+      {$max=$n;}
+    }
+    $array[0]["max"]=$max;
+    return $array;
+   }
 
 }

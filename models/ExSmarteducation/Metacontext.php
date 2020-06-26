@@ -63,9 +63,22 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(
-                ['id' => $id]);
+          return  $this->TableGateway->delete(['id' => $id]);
            
+    }
+    public function FindLastElement()
+    {
+     $rowset = $this->TableGateway->select();
+     $results = $rowset->toArray();
+     $max=0;
+     foreach ($results as $key => $row) {
+       $id=$row['id'];
+       $n=intval($id);
+       if($max<$n)
+       {$max=$n;}
+     }
+     $array[0]["max"]=$max;
+     return $array;
     }
 
 

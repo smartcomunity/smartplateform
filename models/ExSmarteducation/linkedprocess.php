@@ -54,8 +54,7 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(
-                ['id' => $id]);
+          return  $this->TableGateway->delete(['id' => $id]);
            
     }
 

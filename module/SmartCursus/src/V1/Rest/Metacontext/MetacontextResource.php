@@ -11,8 +11,6 @@ class MetacontextResource extends AbstractResourceListener
     public function __construct(AdapterInterface $adapter)
     { 
         $this->adapter = $adapter;
-        
-        
     }
     /**
      * Create a resource
@@ -24,7 +22,7 @@ class MetacontextResource extends AbstractResourceListener
     { $List= new Metacontext($this->adapter);
       $fetch=$List->fetch($data->id);
         $array=(array)$data;
-          if (empty($fetch->id))
+          if (empty($fetch))
         {  return $List->Create($array);
           
         }
@@ -43,7 +41,7 @@ class MetacontextResource extends AbstractResourceListener
     public function delete($id)
     {  $List= new Metacontext($this->adapter);
         $fetch=$List->fetch($id);
-        if (empty($fetch->id))
+        if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }
@@ -143,7 +141,7 @@ public function fetch($id)
     {   $List= new Metacontext($this->adapter);
         $fetch=$List->fetch($id);
         $array=(array)$data;
-      if (empty($fetch->id))
+      if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }
