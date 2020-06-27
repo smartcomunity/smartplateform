@@ -3,7 +3,9 @@ namespace SmartCursus\V1\Rest\Elementmetaprocess;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
+use Models\ExSmarteducation\ElementmetapassrulsTable;
 use Models\ExSmarteducation\ElementmetaprocessTable;
+use Models\ExSmarteducation\linkedprocess;
 use Laminas\Db\Adapter\AdapterInterface;
 class ElementmetaprocessResource extends AbstractResourceListener
 {
@@ -24,7 +26,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     { $List= new ElementmetaprocessTable($this->adapter);
         $fetch=$List->fetch($data->id);
         $array=(array)$data;
-          if (empty($fetch->id))
+          if (empty($fetch))
         {  return $List->Create($array);
           
         }
@@ -41,14 +43,21 @@ class ElementmetaprocessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function delete($id)
-    {  $List= new ElementmetaprocessTable($this->adapter);
-        $fetch=$List->fetch($id);
-        if (empty($fetch->id))
+    {  $List1= new ElementmetaprocessTable($this->adapter);
+       $List2= new ElementmetapassrulsTable($this->adapter);
+       $List3= new linkedprocess($this->adapter);
+       
+        $fetch=$List1->fetch($id);
+        if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }
       else{
-        return $List->Delete($id);
+     
+       $linked=$List1->fetchwithlinked($id);
+       $List2->Delete($linked[0]["PassRules_id"]);
+       $List3->Delete($linked[0]["l_id"]);
+       return $List1->Delete($id);
       }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
@@ -74,7 +83,6 @@ class ElementmetaprocessResource extends AbstractResourceListener
     {
         $List= new ElementmetaprocessTable($this->adapter);
         return $List->fetch($id);
-
     }
 
     /**
@@ -86,7 +94,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     public function fetchAll($params = [])
     {
         $List= new ElementmetaprocessTable($this->adapter);
-        return $List->fetchAll2();
+        return $List->fetch2();
     }
     
 
@@ -135,7 +143,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     {   $List= new ElementmetaprocessTable($this->adapter);
         $fetch=$List->fetch($id);
         $array=(array)$data;
-      if (empty($fetch->id))
+      if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }

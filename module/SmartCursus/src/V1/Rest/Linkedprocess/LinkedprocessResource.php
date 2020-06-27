@@ -24,14 +24,14 @@ class LinkedprocessResource extends AbstractResourceListener
      */
     public function create($data)
     { $List= new linkedprocess($this->adapter);
-      $fetch=$List->fetch($data->id);
-        $array=(array)$data;
-          if (empty($fetch->id))
+      $array=(array)$data;
+      $fetch=$List->fetch($data->l_id);
+          if (empty($fetch))
         {  return $List->Create($array);
           
         }
         else{
-        return new ApiProblem(405, $data->id.' already taken');}
+        return new ApiProblem(405, $data->l_id.' already taken');}
     
         
     }
@@ -45,7 +45,7 @@ class LinkedprocessResource extends AbstractResourceListener
     public function delete($id)
     {  $List= new linkedprocess($this->adapter);
         $fetch=$List->fetch($id);
-        if (empty($fetch->id))
+        if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }
@@ -145,7 +145,7 @@ public function fetch($id)
     {   $List= new linkedprocess($this->adapter);
         $fetch=$List->fetch($id);
         $array=(array)$data;
-      if (empty($fetch->id))
+      if (empty($fetch))
       {
         return new ApiProblem(405, $id.' dont exist');
       }

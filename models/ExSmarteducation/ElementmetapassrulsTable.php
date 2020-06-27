@@ -22,7 +22,7 @@ $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
 /*foreach ($results as $key => $row) {
     $arr [] = array(
-        'id'         => $row ['id'],
+        'id'         => $row ['Pass_id'],
         'PassRulsDesc '     => $row ['PassRulsDesc '],
         'ElementMetaProcess_id  ' => $row ['ElementMetaProcess_id  '],
         'ElementMetaProcess_id1'         => $row ['ElementMetaProcess_id1'],
@@ -38,7 +38,7 @@ return $results;
     }
     public function fetch($id)
     {    
-        $rowset  = $this->TableGateway->select(['id' => $id]);
+        $rowset  = $this->TableGateway->select(['Pass_id' => $id]);
         return $Row   = $rowset->current();
     }
     public function Create($data)
@@ -49,12 +49,12 @@ return $results;
     }
     public function Update($data,$id)
     {   
-        return $this->TableGateway->update($data,['id' => $id],null);
+        return $this->TableGateway->update($data,['Pass_id' => $id],null);
     }
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(['id' => $id]);
+          return  $this->TableGateway->delete(['Pass_id' => $id]);
            
     }
     public function FindLastElement()
@@ -63,7 +63,7 @@ return $results;
      $results = $rowset->toArray();
      $max=0;
      foreach ($results as $key => $row) {
-       $id=$row['id'];
+       $id=$row['Pass_id'];
        $n=intval($id);
        if($max<$n)
        {$max=$n;}

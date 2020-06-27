@@ -13,18 +13,33 @@ class ElementmetaprocessTable
             
              $this->TableGateway= new TableGateway('elementmetaprocess',$adapter);
              $this->TableGateway2= new TableGateway('linkedprocess',$adapter);
+             $this->TableGateway3= new TableGateway('elementmetapassruls',$adapter);
+             $this->TableGateway4= new TableGateway('metacontext',$adapter);
+             $this->TableGateway5= new TableGateway('metamodelsworker',$adapter);
 
     }
     public function fetchAll2()
     {
         $rowset = $this->TableGateway->select();
         $results = $rowset->toArray();
-        //$arr[] = array();
         $i=0;
 foreach ($results as $key => $row) {
     $id=$row['id'];
+    $context=$row ['MetaContext_id'];
+    $work=$row ['MetaModelsWorker_id'];
+
     $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
     $results2 = $rowset2->toArray();
+
+    $rowset3 = $this->TableGateway3->select(['ElementMetaProcess_id' => $id]);
+    $results3 = $rowset3->toArray();
+
+    $rowset4 = $this->TableGateway4->select(['id' => $context]);
+    $results4 = $rowset4->toArray();
+
+    $rowset5 = $this->TableGateway5->select(['id' => $work]);
+    $results5 = $rowset5->toArray();
+
     $arr[$i]["id"]=$row ['id'];
     $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
     $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
@@ -39,16 +54,23 @@ foreach ($results as $key => $row) {
     $arr[$i]["nb_units"]=$row ['nb_units'];
     $arr[$i]["credit"]=$row ['credit'];
     $arr[$i]["Lp"]=$results2;
+    $arr[$i]["PassRules"]=$results3;
+    $arr[$i]["MetaContext"]=$results4;
+    $arr[$i]["Metamodelsworkerp"]=$results5;
+
     $i++;
     
 }
-//$arr=array_merge($results, $results2);
 return $arr;
 }
     public function fetch2()
     {  
     $results=$this->adapter->query(
-        'SELECT * FROM linkedprocess AS l RIGHT JOIN elementmetaprocess AS e ON l.MetaProcess=e.id',
+        'SELECT * FROM  elementmetaprocess  AS e 
+        LEFT JOIN linkedprocess AS l ON e.id=l.MetaProcess 
+        LEFT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  
+        LEFT JOIN metacontext  AS m ON e.MetaContext_id=m.id
+        LEFT JOIN metamodelsworker  AS w ON e.MetaModelsWorker_id=w.id',
         Adapter::QUERY_MODE_EXECUTE
     );
        return $results;
@@ -60,6 +82,23 @@ return $arr;
   $results = $rowset->toArray();
 return $results;
     }
+    public function fetchwithlinked($id)
+    {  
+    $results=$this->adapter->query(
+        'SELECT * FROM  elementmetaprocess  AS e LEFT JOIN linkedprocess AS l ON e.id=l.MetaProcess LEFT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  WHERE e.id ="'.$id.'"',
+        Adapter::QUERY_MODE_EXECUTE
+    );
+       $arr=[];
+       foreach ($results as $key => $row) {
+        $arr[0]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
+        $arr[0]["MetaContext_id"]=$row ['MetaContext_id'];
+        $arr[0]["l_id"]=$row ['l_id'];
+        $arr[0]["PassRules_id"]=$row ['id'];
+      }
+      return $arr;
+       //return $results;
+    }
+
     public function fetch($id)
     {    
         $rowset  = $this->TableGateway->select(['id' => $id]);
