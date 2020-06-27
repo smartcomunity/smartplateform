@@ -70,7 +70,7 @@ class LastElementResource extends AbstractResourceListener
     public function fetchAll($params = [])
     {
         $List1= new Metacontext($this->adapter);
-        $array[0]["Metacontext LastElement"]=$List1->FindLastElement();
+        $array[0]["Metacontext"]=$List1->FindLastElement();
 
         $List2= new ElementmetapassrulsTable($this->adapter);
         $array[1]["Elementmetapassruls"]=$List2->FindLastElement();
