@@ -56,7 +56,7 @@ foreach ($results as $key => $row) {
     $arr[$i]["Lp"]=$results2;
     $arr[$i]["PassRules"]=$results3;
     $arr[$i]["MetaContext"]=$results4;
-    $arr[$i]["Metamodelsworkerp"]=$results5;
+    $arr[$i]["Metamodelsworker"]=$results5;
 
     $i++;
     
@@ -67,12 +67,39 @@ return $arr;
     {  
     $results=$this->adapter->query(
         'SELECT * FROM  elementmetaprocess  AS e 
-        LEFT JOIN linkedprocess AS l ON e.id=l.MetaProcess 
-        LEFT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  
         LEFT JOIN metacontext  AS m ON e.MetaContext_id=m.id
-        LEFT JOIN metamodelsworker  AS w ON e.MetaModelsWorker_id=w.id',
+        LEFT JOIN metamodelsworker  AS w ON e.MetaModelsWorker_id=w.id
+        INNER JOIN linkedprocess AS l ON e.id=l.MetaProcess 
+        INNER JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  ',
         Adapter::QUERY_MODE_EXECUTE
     );
+   /* $results=$this->adapter->query(
+        'SELECT * FROM  elementmetaprocess  AS e , linkedprocess AS l
+        RIGHT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id 
+        RIGHT JOIN metacontext  AS m ON e.MetaContext_id=m.id
+        RIGHT JOIN metamodelsworker  AS w ON e.MetaModelsWorker_id=w.id 
+        WHERE  e.id=e.MetaContext_id=me.id ',
+        Adapter::QUERY_MODE_EXECUTE
+    );
+    $i=0;
+    $results=(array)$results;
+    foreach ($results as $key => $row) {
+        $id=$row["id"];
+        $rowset = $this->TableGateway3->select(['ElementMetaProcess_id' => $id]);
+        $results2 = $rowset->toArray();
+        foreach ($results2 as $key2 => $row2){
+            $results[$i]["Pass_id "]=$row2 ['Pass_id '];
+            $results[$i]["PassRulsDesc"]=$row2 ['PassRulsDesc'];
+            $results[$i]["ElementMetaProcess_id"]=$row2 ['ElementMetaProcess_id'];
+            $results[$i]["evenPassRuls"]=$row2 ['evenPassRuls'];
+            $results[$i]["PassRuls"]=$row2 ['PassRuls'];
+            $results[$i]["LabelPassRuls"]=$row2 ['LabelPassRuls'];
+            $results[$i]["PassRulsOrder"]=$row2 ['PassRulsOrder'];
+            $i++;
+            
+        }
+
+    }*/
        return $results;
     }
 
