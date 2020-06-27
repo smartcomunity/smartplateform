@@ -94,7 +94,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     public function fetchAll($params = [])
     {
         $List= new ElementmetaprocessTable($this->adapter);
-        return $List->fetch2();
+        return $List->fetchAll2();
     }
     
 

@@ -73,16 +73,16 @@ class LastElementResource extends AbstractResourceListener
         $array[0]["Metacontext LastElement"]=$List1->FindLastElement();
 
         $List2= new ElementmetapassrulsTable($this->adapter);
-        $array[1]["ElementmetapassrulsTable LastElement"]=$List2->FindLastElement();
+        $array[1]["Elementmetapassruls"]=$List2->FindLastElement();
 
         $List3=new ElementmetaprocessTable($this->adapter);
-        $array[2]["ElementmetaprocessTable LastElement"]=$List3->FindLastElement();
+        $array[2]["Elementmetaprocess"]=$List3->FindLastElement();
 
         $List4= new linkedprocess($this->adapter);
-        $array[3]["linkedprocess LastElement"]=$List4->FindLastElement();
+        $array[3]["linkedprocess"]=$List4->FindLastElement();
 
         $List5= new MetamodelsworkerTable($this->adapter);
-        $array[4]["MetamodelsworkerTable LastElement"]=$List5->FindLastElement();
+        $array[4]["MetamodelsworkerTable"]=$List5->FindLastElement();
 
         return $array;
     }
