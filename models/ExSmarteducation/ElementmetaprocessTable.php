@@ -144,8 +144,7 @@ return $results;
     public function Delete($id)
     {
       
-          return  $this->TableGateway->delete(
-                ['id' => $id]);
+          return  $this->TableGateway->delete( ['id' => $id]);
            
     }
 

@@ -9,15 +9,22 @@ return [
         'selectors' => [],
     ],
     'db' => [
-        'driver' => \pdo::class,
-        'dsn' => 'mysql:dbname=smarteducation2;host=localhost;charset=utf8;port=3306',
-        'user' => 'root',
-        'pass' => '',
-        'driver_options' => [
-            1002 => 'SET NAMES \'UTF8\'',
-        ],
+        
         'adapters' => [
-            'smarteducation2' => [],
+            'smarteducation2' => ['driver' => \pdo::class,
+            'dsn' => 'mysql:dbname=smarteducation2;host=localhost;charset=utf8;port=3306',
+            'user' => 'root',
+            'pass' => '',
+            'driver_options' => [
+                1002 => 'SET NAMES \'UTF8\'',
+            ],],
+            'data' => ['driver' => \pdo::class,
+            'dsn' => 'mysql:dbname=data;host=localhost;charset=utf8;port=3306',
+            'user' => 'root',
+            'pass' => '',
+            'driver_options' => [
+                1002 => 'SET NAMES \'UTF8\'',
+            ],],
         ],
     ],
     'router' => [

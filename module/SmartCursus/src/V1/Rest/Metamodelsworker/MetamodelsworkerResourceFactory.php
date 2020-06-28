@@ -5,6 +5,6 @@ class MetamodelsworkerResourceFactory
 {
     public function __invoke($services)
     {
-        return new MetamodelsworkerResource($services->get(Adapter::class));
+        return new MetamodelsworkerResource($services->get("smarteducation2"));
     }
 }

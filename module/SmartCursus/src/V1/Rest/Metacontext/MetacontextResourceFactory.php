@@ -5,6 +5,6 @@ class MetacontextResourceFactory
 {
     public function __invoke($services)
     {
-        return new MetacontextResource($services->get(Adapter::class));
+        return new MetacontextResource($services->get("smarteducation2"));
     }
 }

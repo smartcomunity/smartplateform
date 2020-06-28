@@ -11,7 +11,6 @@ class ElementmetapassrulsTable
     protected $TableGateway;
     public function __construct(Adapter $adapter)
     {        $this->adapter = $adapter;
-             
              $this->TableGateway= new TableGateway('elementmetapassruls',$adapter);
 
     }

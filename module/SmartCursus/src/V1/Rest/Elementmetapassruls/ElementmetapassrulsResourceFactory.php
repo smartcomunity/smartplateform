@@ -5,6 +5,6 @@ class ElementmetapassrulsResourceFactory
 {
     public function __invoke($services)
     {
-        return new ElementmetapassrulsResource($services->get(Adapter::class));
+        return new ElementmetapassrulsResource($services->get("smarteducation2"));
     }
 }

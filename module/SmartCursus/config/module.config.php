@@ -8,6 +8,9 @@ return [
             \SmartCursus\V1\Rest\Metamodelsworker\MetamodelsworkerResource::class => \SmartCursus\V1\Rest\Metamodelsworker\MetamodelsworkerResourceFactory::class,
             \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessResource::class => \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessResourceFactory::class,
             \SmartCursus\V1\Rest\LastElement\LastElementResource::class => \SmartCursus\V1\Rest\LastElement\LastElementResourceFactory::class,
+            \SmartCursus\V1\Rest\RevokeToken\RevokeTokenResource::class => \SmartCursus\V1\Rest\RevokeToken\RevokeTokenResourceFactory::class,
+            \SmartCursus\V1\Rest\User\UserResource::class => \SmartCursus\V1\Rest\User\UserResourceFactory::class,
+            \SmartCursus\V1\Rest\UserType\UserTypeResource::class => \SmartCursus\V1\Rest\UserType\UserTypeResourceFactory::class,
         ],
     ],
     'router' => [
@@ -66,6 +69,33 @@ return [
                     ],
                 ],
             ],
+            'smart-cursus.rest.revoke-token' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/revoke-token[/:revoke_token_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\RevokeToken\\Controller',
+                    ],
+                ],
+            ],
+            'smart-cursus.rest.user' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/user[/:user_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\User\\Controller',
+                    ],
+                ],
+            ],
+            'smart-cursus.rest.user-type' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/user-type[/:user_type_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\UserType\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -76,6 +106,9 @@ return [
             4 => 'smart-cursus.rest.metamodelsworker',
             5 => 'smart-cursus.rest.linkedprocess',
             7 => 'smart-cursus.rest.last-element',
+            9 => 'smart-cursus.rest.revoke-token',
+            10 => 'smart-cursus.rest.user',
+            11 => 'smart-cursus.rest.user-type',
         ],
     ],
     'api-tools-rest' => [
@@ -211,6 +244,72 @@ return [
             'collection_class' => \SmartCursus\V1\Rest\LastElement\LastElementCollection::class,
             'service_name' => 'LastElement',
         ],
+        'SmartCursus\\V1\\Rest\\RevokeToken\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\RevokeToken\RevokeTokenResource::class,
+            'route_name' => 'smart-cursus.rest.revoke-token',
+            'route_identifier_name' => 'revoke_token_id',
+            'collection_name' => 'revoke_token',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\RevokeToken\RevokeTokenEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\RevokeToken\RevokeTokenCollection::class,
+            'service_name' => 'RevokeToken',
+        ],
+        'SmartCursus\\V1\\Rest\\User\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\User\UserResource::class,
+            'route_name' => 'smart-cursus.rest.user',
+            'route_identifier_name' => 'user_id',
+            'collection_name' => 'user',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\User\UserEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\User\UserCollection::class,
+            'service_name' => 'User',
+        ],
+        'SmartCursus\\V1\\Rest\\UserType\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\UserType\UserTypeResource::class,
+            'route_name' => 'smart-cursus.rest.user-type',
+            'route_identifier_name' => 'user_type_id',
+            'collection_name' => 'user_type',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\UserType\UserTypeEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\UserType\UserTypeCollection::class,
+            'service_name' => 'UserType',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -220,6 +319,9 @@ return [
             'SmartCursus\\V1\\Rest\\Metamodelsworker\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\Linkedprocess\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\LastElement\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\RevokeToken\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\User\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\UserType\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -252,6 +354,21 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'SmartCursus\\V1\\Rest\\RevokeToken\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\User\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\UserType\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -275,6 +392,18 @@ return [
                 1 => 'application/json',
             ],
             'SmartCursus\\V1\\Rest\\LastElement\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\RevokeToken\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\User\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\UserType\\Controller' => [
                 0 => 'application/vnd.smart-cursus.v1+json',
                 1 => 'application/json',
             ],
@@ -353,6 +482,78 @@ return [
                 'route_name' => 'smart-cursus.rest.last-element',
                 'route_identifier_name' => 'last_element_id',
                 'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\RevokeToken\RevokeTokenEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.revoke-token',
+                'route_identifier_name' => 'revoke_token_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\RevokeToken\RevokeTokenCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.revoke-token',
+                'route_identifier_name' => 'revoke_token_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\User\UserEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.user',
+                'route_identifier_name' => 'user_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\User\UserCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.user',
+                'route_identifier_name' => 'user_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\UserType\UserTypeEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.user-type',
+                'route_identifier_name' => 'user_type_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\UserType\UserTypeCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.user-type',
+                'route_identifier_name' => 'user_type_id',
+                'is_collection' => true,
+            ],
+        ],
+    ],
+    'api-tools-mvc-auth' => [
+        'authorization' => [
+            'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
+                'collection' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ],
+                'entity' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ],
+            ],
+            'SmartCursus\\V1\\Rest\\User\\Controller' => [
+                'collection' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ],
+                'entity' => [
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ],
             ],
         ],
     ],

@@ -5,6 +5,6 @@ class LinkedprocessResourceFactory
 {
     public function __invoke($services)
     {
-        return new LinkedprocessResource($services->get(Adapter::class));
+        return new LinkedprocessResource($services->get("smarteducation2"));
     }
 }

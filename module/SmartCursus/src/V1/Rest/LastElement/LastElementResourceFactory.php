@@ -5,6 +5,6 @@ class LastElementResourceFactory
 {
     public function __invoke($services)
     { 
-        return new LastElementResource($services->get(Adapter::class));
+        return new LastElementResource($services->get("smarteducation2"));
     }
 }

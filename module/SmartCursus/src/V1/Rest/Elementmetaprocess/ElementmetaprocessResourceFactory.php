@@ -5,6 +5,6 @@ class ElementmetaprocessResourceFactory
 {
     public function __invoke($services)
     {
-        return new ElementmetaprocessResource($services->get(Adapter::class));
+        return new ElementmetaprocessResource($services->get("smarteducation2"));
     }
 }
