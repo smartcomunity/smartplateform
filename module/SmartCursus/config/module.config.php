@@ -463,7 +463,7 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'smart-cursus.rest.linkedprocess',
                 'route_identifier_name' => 'linkedprocess_id',
-                'hydrator' => \Laminas\Hydrator\ArraySerializable::class,
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
             ],
             \SmartCursus\V1\Rest\Linkedprocess\LinkedprocessCollection::class => [
                 'entity_identifier_name' => 'id',

@@ -46,7 +46,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     {  $List1= new ElementmetaprocessTable($this->adapter);
        $List2= new ElementmetapassrulsTable($this->adapter);
        $List3= new linkedprocess($this->adapter);
-       
+       $List4= new Metacontext($this->adapter);
         $fetch=$List1->fetch($id);
         if (empty($fetch))
       {
@@ -55,8 +55,9 @@ class ElementmetaprocessResource extends AbstractResourceListener
       else{
      
        $linked=$List1->fetchwithlinked($id);
-       $List2->Delete($linked[0]["PassRules_id"]);
+       $List2->Delete($linked[0]["Pass_id"]);
        $List3->Delete($linked[0]["l_id"]);
+       $List4->Delete($linked[0]["MetaContext_id"]);
        return $List1->Delete($id);
       }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
