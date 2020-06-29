@@ -112,7 +112,10 @@ return $results;
     public function fetchwithlinked($id)
     {  
     $results=$this->adapter->query(
-        'SELECT * FROM  elementmetaprocess  AS e LEFT JOIN linkedprocess AS l ON e.id=l.MetaProcess LEFT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  WHERE e.id ="'.$id.'"',
+        'SELECT * FROM  elementmetaprocess  AS e 
+        LEFT JOIN linkedprocess AS l ON e.id=l.MetaProcess 
+        LEFT JOIN elementmetapassruls  AS p ON e.id=p.ElementMetaProcess_id  
+        WHERE e.id ="'.$id.'"',
         Adapter::QUERY_MODE_EXECUTE
     );
        $arr=[];

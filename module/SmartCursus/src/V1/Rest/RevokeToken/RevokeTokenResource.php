@@ -3,9 +3,15 @@ namespace SmartCursus\V1\Rest\RevokeToken;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
-
+use Laminas\Db\Adapter\AdapterInterface;
+use Models\ExSmarteducation\User;
 class RevokeTokenResource extends AbstractResourceListener
 {
+    private $adapter;
+    public function __construct(AdapterInterface $adapter)
+    { 
+        $this->adapter = $adapter;
+    }
     /**
      * Create a resource
      *
@@ -13,8 +19,9 @@ class RevokeTokenResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    {
-        return new ApiProblem(405, 'The POST method has not been defined');
+    {   $token=$data->token;
+        $List= new User($this->adapter);
+        return $List->RevokeToken($token);
     }
 
     /**

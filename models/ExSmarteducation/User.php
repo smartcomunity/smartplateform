@@ -74,6 +74,13 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
      }
      return $max;
     }
+    public function RevokeToken($token){
+        $results=$this->adapter->query(
+            'DELETE FROM oauth_access_tokens WHERE access_token="'.$token.'"',
+            Adapter::QUERY_MODE_EXECUTE
+        );
+      return $results;
 
+    }
 
 }
