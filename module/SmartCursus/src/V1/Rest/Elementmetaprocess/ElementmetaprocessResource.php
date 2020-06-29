@@ -6,6 +6,7 @@ use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Models\ExSmarteducation\ElementmetapassrulsTable;
 use Models\ExSmarteducation\ElementmetaprocessTable;
 use Models\ExSmarteducation\linkedprocess;
+use Models\ExSmarteducation\Metacontext;
 use Laminas\Db\Adapter\AdapterInterface;
 class ElementmetaprocessResource extends AbstractResourceListener
 {
