@@ -122,8 +122,8 @@ return $results;
        foreach ($results as $key => $row) {
         $arr[0]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
         $arr[0]["MetaContext_id"]=$row ['MetaContext_id'];
-        $arr[0]["l_id"]=$row ['l_id'];
-        $arr[0]["PassRules_id"]=$row ['id'];
+        $arr[0]["l_id"]=$row ['l_id '];
+        $arr[0]["Pass_id"]=$row ['Pass_id'];
       }
       return $arr;
        //return $results;

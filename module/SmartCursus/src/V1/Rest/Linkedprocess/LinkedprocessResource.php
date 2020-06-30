@@ -51,6 +51,7 @@ class LinkedprocessResource extends AbstractResourceListener
       }
       else{
         return $List->Delete($id);
+        
       }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }

@@ -59,7 +59,15 @@ class ElementmetaprocessResource extends AbstractResourceListener
        $List2->Delete($linked[0]["Pass_id"]);
        $List3->Delete($linked[0]["l_id"]);
        $List4->Delete($linked[0]["MetaContext_id"]);
-       return $List1->Delete($id);
+       $List1->Delete($id);
+       if ($List1==true&&$List1==true&&$List1==true&&$List1==true){
+           return true;
+       }
+       else{
+        return false;
+       }
+       
+       //return $List1->Delete($id);
       }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }

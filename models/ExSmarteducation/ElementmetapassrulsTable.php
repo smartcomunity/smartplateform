@@ -19,20 +19,6 @@ class ElementmetapassrulsTable
     {
 $rowset = $this->TableGateway->select();
 $results = $rowset->toArray();
-/*foreach ($results as $key => $row) {
-    $arr [] = array(
-        'id'         => $row ['Pass_id'],
-        'PassRulsDesc '     => $row ['PassRulsDesc '],
-        'ElementMetaProcess_id  ' => $row ['ElementMetaProcess_id  '],
-        'ElementMetaProcess_id1'         => $row ['ElementMetaProcess_id1'],
-        'evenPassRuls '         => $row ['evenPassRuls '],
-        'PassRuls '         => $row ['PassRuls '],
-        'LabelPassRuls '         => $row ['LabelPassRuls '],
-        'PassRulsOrder'         => $row ['PassRulsOrder']
-    );
-
-}
-return $arr;*/
 return $results;
     }
     public function fetch($id)

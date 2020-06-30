@@ -50,9 +50,7 @@ $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECU
     }
     public function Delete($id)
     {
-      
-          return  $this->TableGateway->delete(['l_id' => $id]);
-           
+     return  $this->TableGateway->delete(['l_id' => $id]); 
     }
     public function FindLastElement()
     {
