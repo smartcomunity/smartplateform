@@ -31,7 +31,7 @@ $results = $rowset->toArray();
 return $arr;*/
 return $results;
     }
-    public function fetch2($data)
+    public function fetchByEveryThing($data)
     {   //unset($arr1[""]);
         $sql    = new Sql($this->adapter);
 $select = $sql->select();

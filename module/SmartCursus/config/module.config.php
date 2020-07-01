@@ -11,6 +11,7 @@ return [
             \SmartCursus\V1\Rest\RevokeToken\RevokeTokenResource::class => \SmartCursus\V1\Rest\RevokeToken\RevokeTokenResourceFactory::class,
             \SmartCursus\V1\Rest\User\UserResource::class => \SmartCursus\V1\Rest\User\UserResourceFactory::class,
             \SmartCursus\V1\Rest\UserType\UserTypeResource::class => \SmartCursus\V1\Rest\UserType\UserTypeResourceFactory::class,
+            \SmartCursus\V1\Rest\FindProcess\FindProcessResource::class => \SmartCursus\V1\Rest\FindProcess\FindProcessResourceFactory::class,
         ],
     ],
     'router' => [
@@ -96,6 +97,15 @@ return [
                     ],
                 ],
             ],
+            'smart-cursus.rest.find-process' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/find-process[/:find_process_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\FindProcess\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -109,6 +119,7 @@ return [
             9 => 'smart-cursus.rest.revoke-token',
             10 => 'smart-cursus.rest.user',
             11 => 'smart-cursus.rest.user-type',
+            12 => 'smart-cursus.rest.find-process',
         ],
     ],
     'api-tools-rest' => [
@@ -310,6 +321,28 @@ return [
             'collection_class' => \SmartCursus\V1\Rest\UserType\UserTypeCollection::class,
             'service_name' => 'UserType',
         ],
+        'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\FindProcess\FindProcessResource::class,
+            'route_name' => 'smart-cursus.rest.find-process',
+            'route_identifier_name' => 'find_process_id',
+            'collection_name' => 'find_process',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\FindProcess\FindProcessEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\FindProcess\FindProcessCollection::class,
+            'service_name' => 'FindProcess',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -322,6 +355,7 @@ return [
             'SmartCursus\\V1\\Rest\\RevokeToken\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\User\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\UserType\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -369,6 +403,11 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -404,6 +443,10 @@ return [
                 1 => 'application/json',
             ],
             'SmartCursus\\V1\\Rest\\UserType\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => [
                 0 => 'application/vnd.smart-cursus.v1+json',
                 1 => 'application/json',
             ],
@@ -519,6 +562,18 @@ return [
                 'route_identifier_name' => 'user_type_id',
                 'is_collection' => true,
             ],
+            \SmartCursus\V1\Rest\FindProcess\FindProcessEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.find-process',
+                'route_identifier_name' => 'find_process_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\FindProcess\FindProcessCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.find-process',
+                'route_identifier_name' => 'find_process_id',
+                'is_collection' => true,
+            ],
         ],
     ],
     'api-tools-mvc-auth' => [
@@ -556,5 +611,8 @@ return [
                 ],
             ],
         ],
+    ],
+    'api-tools' => [
+        'db-connected' => [],
     ],
 ];

@@ -164,5 +164,14 @@ return $results;
     }
     return $max;
    }
-
+   public function fetchByEveryThing($data)
+    {   
+        $sql    = new Sql($this->adapter);
+$select = $sql->select();
+$select->from('elementmetaprocess');
+$select->where([$data['name'] => $data['value']]);
+$selectString = $sql->buildSqlString($select);
+$results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
+        return $results = $results->current();
+    }
 }
