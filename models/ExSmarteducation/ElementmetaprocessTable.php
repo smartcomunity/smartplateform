@@ -165,13 +165,31 @@ return $results;
     return $max;
    }
    public function fetchByEveryThing($data)
-    {   
+    {   $arr=[];
         $sql    = new Sql($this->adapter);
-$select = $sql->select();
-$select->from('elementmetaprocess');
-$select->where([$data['name'] => $data['value']]);
-$selectString = $sql->buildSqlString($select);
-$results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
-        return $results = $results->current();
+        $select = $sql->select();
+        $select->from('elementmetaprocess');
+        $select->where([$data['name'] => $data['value']]);
+        $selectString = $sql->buildSqlString($select);
+        $results = $this->adapter->query($selectString, $this->adapter::QUERY_MODE_EXECUTE);
+        //return $results = $results->current();
+        $i=0;
+        foreach ($results as $key => $row) {
+          $arr[$i]["id"]=$row ['id'];
+          $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
+          $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
+          $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
+          $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
+          $arr[$i]["model_type"]=$row ['model_type'];
+          $arr[$i]["Field"]=$row ['Field'];
+          $arr[$i]["Mention"]=$row ['Mention'];
+          $arr[$i]["Specialty"]=$row ['Specialty'];
+          $arr[$i]["Nb_years"]=$row ['Nb_years'];
+          $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
+          $arr[$i]["nb_units"]=$row ['nb_units'];
+          $arr[$i]["credit"]=$row ['credit'];
+          $i++;
     }
+    return $arr;
+}
 }
