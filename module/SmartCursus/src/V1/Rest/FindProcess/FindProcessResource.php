@@ -55,36 +55,14 @@ class FindProcessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function fetch($id)
-    {  $id=str_replace("."," ",$id);
-        $pieces = explode("&", $id);
-      /*$arr["name"]=$pieces[0];
-       $arr["value"]=$pieces[1];*/
-       $arr=[];
-       $i=0;
-       /*$j=1;
-       $name="name";
-       $value="value";
-       $c=1;*/
-       foreach ($pieces as $key => $row) {
-        /*$str1=strval($c);
-        $str2=strval($c+1);*/
-        /*$name=$str1;
-        $value=$str2;*/
-        $arr[$i]=$pieces[$key];
-        $i++;
-        /*$x=$key+1;
-        $arr[$str2]=$pieces[$x];
-        $j=$j+2;
-        $i=$i+2;
-        $c++;*/
-       }
+    {  $pieces = explode(".", $id);
+      $arr["name"]=$pieces[0];
+       $arr["value"]=$pieces[1];
 
         $List= new ElementmetaprocessTable($this->adapter);
-        //return $List->fetchByEveryThing($arr);
-        return $List->fetchByEveryThing2($arr);
+        return $List->fetchByEveryThing($arr);
 
     }
-
     /**
      * Fetch all or a subset of resources
      *
