@@ -250,5 +250,59 @@ public function fetchByEveryThingV2($data){
   }
     return $arr;
 }
+public function fetchByEveryThingV3($data){
+    $arr=[];
+    $j=0;
+    foreach ($data as $key => $row) {
+       $j++;
+    }
+    switch ($j) {
+      case 2:
+          $rowset  = $this->TableGateway->select([$data['n1'] => $data['v1']]);
+          break;
+      case 4:
+          $rowset  = $this->TableGateway->select([ $data['n1'] => $data['v1'],
+                                                   $data['n2'] => $data['v2']]);
+          break;
+      case 6:
+          $rowset  = $this->TableGateway->select([$data['n1'] => $data['v1'],
+                                                  $data['n2'] => $data['v2'],
+                                                  $data['n3'] => $data['v3']]);
+          break;
+      case 8:
+          $rowset  = $this->TableGateway->select([$data['n1'] => $data['v1'],
+                                                  $data['n2'] => $data['v2'],
+                                                  $data['n3'] => $data['v3'],
+                                                  $data['n4'] => $data['v4']]);
+          break;
+      case 10:
+          $rowset  = $this->TableGateway->select([$data['n1'] => $data['v1'],
+                                                  $data['n2'] => $data['v2'],
+                                                  $data['n3'] => $data['v3'],
+                                                  $data['n4'] => $data['v4'],
+                                                  $data['n5'] => $data['v5']
+              ]);
+              break;    
+    }
+    
+      $i=0;
+      foreach ($rowset as $key => $row) {
+          $arr[$i]["id"]=$row ['id'];
+          $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
+          $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
+          $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
+          $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
+          $arr[$i]["model_type"]=$row ['model_type'];
+          $arr[$i]["Field"]=$row ['Field'];
+          $arr[$i]["Mention"]=$row ['Mention'];
+          $arr[$i]["Specialty"]=$row ['Specialty'];
+          $arr[$i]["Nb_years"]=$row ['Nb_years'];
+          $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
+          $arr[$i]["nb_units"]=$row ['nb_units'];
+          $arr[$i]["credit"]=$row ['credit'];
+          $i++;
+    }
+      return $arr;
+  }
 
 }
