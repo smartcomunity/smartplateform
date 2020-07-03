@@ -193,12 +193,44 @@ return $results;
 }
 public function fetchByEveryThingV2($data){
   $arr=[];
-    $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
+  $j=0;
+  foreach ($data as $key => $row) {
+     $j++;
+  }
+  switch ($j) {
+    case 1:
+        $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess']]);
+        break;
+    case 2:
+        $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
+                                                 'model_type' => $data['model_type']]);
+        break;
+    case 3:
+        $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
+                                                    'model_type' => $data['model_type'],
+                                                    'Field' => $data['Field']]);
+        break;
+    case 4:
+        $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
+                                                'model_type' => $data['model_type'],
+                                                'Field' => $data['Field'],
+                                                'Mention' => $data['Mention']]);
+        break;
+    case 5:
+        $rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
+                                                'model_type' => $data['model_type'],
+                                                'Field' => $data['Field'],
+                                                'Mention' => $data['Mention'],
+                                                'Specialty' => $data['Specialty']
+            ]);
+            break;    
+  }
+    /*$rowset  = $this->TableGateway->select(['LabelMetaProcess' => $data['LabelMetaProcess'],
     'model_type' => $data['model_type'],
     'Field' => $data['Field'],
     'Mention' => $data['Mention'],
     'Specialty' => $data['Specialty'],
-    ]);
+    ]);*/
     $i=0;
     foreach ($rowset as $key => $row) {
         $arr[$i]["id"]=$row ['id'];
