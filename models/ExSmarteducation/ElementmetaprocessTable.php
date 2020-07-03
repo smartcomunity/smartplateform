@@ -119,14 +119,15 @@ return $results;
         Adapter::QUERY_MODE_EXECUTE
     );
        $arr=[];
-       foreach ($results as $key => $row) {
+       $res=$results->toArray();
+       foreach ($res as $key => $row) {
         $arr[0]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
         $arr[0]["MetaContext_id"]=$row ['MetaContext_id'];
-        $arr[0]["l_id"]=$row ['l_id '];
+        $arr[0]["l_id"]=$row ['l_id'];
         $arr[0]["Pass_id"]=$row ['Pass_id'];
       }
       return $arr;
-       //return $results;
+       //return $results->toArray();
     }
 
     public function fetch($id)
@@ -134,6 +135,51 @@ return $results;
         $rowset  = $this->TableGateway->select(['id' => $id]);
         return $Row   = $rowset->current();
     }
+
+    public function fetchV2($id)
+    {   $arr1=[];
+        $arr=[];
+        $arr1=$this->fetchwithlinked($id);
+        $rowset  = $this->TableGateway->select(['id' => $id]);
+        $results   = $rowset->toArray();
+
+        $rowset2 = $this->TableGateway2->select(['MetaProcess' => $id]);
+        $results2 = $rowset2->toArray();
+    
+        $rowset3 = $this->TableGateway3->select(['ElementMetaProcess_id' => $id]);
+        $results3 = $rowset3->toArray();
+    
+        $rowset4 = $this->TableGateway4->select(['id' => $arr1[0]["MetaContext_id"]]);
+        $results4 = $rowset4->toArray();
+    
+        $rowset5 = $this->TableGateway5->select(['id' => $arr1[0]["MetaModelsWorker_id"]]);
+        $results5 = $rowset5->toArray();
+        $i=0;
+        foreach ($results as $key => $row) {
+            $arr[$i]["id"]=$row ['id'];
+            $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
+            $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
+            $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
+            $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
+            $arr[$i]["model_type"]=$row ['model_type'];
+            $arr[$i]["Field"]=$row ['Field'];
+            $arr[$i]["Mention"]=$row ['Mention'];
+            $arr[$i]["Specialty"]=$row ['Specialty'];
+            $arr[$i]["Nb_years"]=$row ['Nb_years'];
+            $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
+            $arr[$i]["nb_units"]=$row ['nb_units'];
+            $arr[$i]["credit"]=$row ['credit'];
+            $arr[$i]["Lp"]=$results2;
+            $arr[$i]["PassRules"]=$results3;
+            $arr[$i]["MetaContext"]=$results4;
+            $arr[$i]["Metamodelsworker"]=$results5;
+        
+            $i++;
+            
+        }
+return $arr;
+    } 
+
     public function Create($data)
     { 
         return $this->TableGateway->insert($data);
