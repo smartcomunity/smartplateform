@@ -12,6 +12,10 @@ return [
             \SmartCursus\V1\Rest\User\UserResource::class => \SmartCursus\V1\Rest\User\UserResourceFactory::class,
             \SmartCursus\V1\Rest\UserType\UserTypeResource::class => \SmartCursus\V1\Rest\UserType\UserTypeResourceFactory::class,
             \SmartCursus\V1\Rest\FindProcess\FindProcessResource::class => \SmartCursus\V1\Rest\FindProcess\FindProcessResourceFactory::class,
+            \SmartCursus\V1\Rest\Degree\DegreeResource::class => \SmartCursus\V1\Rest\Degree\DegreeResourceFactory::class,
+            \SmartCursus\V1\Rest\Session\SessionResource::class => \SmartCursus\V1\Rest\Session\SessionResourceFactory::class,
+            \SmartCursus\V1\Rest\Subject\SubjectResource::class => \SmartCursus\V1\Rest\Subject\SubjectResourceFactory::class,
+            \SmartCursus\V1\Rest\Unit\UnitResource::class => \SmartCursus\V1\Rest\Unit\UnitResourceFactory::class,
         ],
     ],
     'router' => [
@@ -106,6 +110,42 @@ return [
                     ],
                 ],
             ],
+            'smart-cursus.rest.degree' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/degree[/:degree_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\Degree\\Controller',
+                    ],
+                ],
+            ],
+            'smart-cursus.rest.session' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/session[/:session_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\Session\\Controller',
+                    ],
+                ],
+            ],
+            'smart-cursus.rest.subject' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/subject[/:subject_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\Subject\\Controller',
+                    ],
+                ],
+            ],
+            'smart-cursus.rest.unit' => [
+                'type' => 'Segment',
+                'options' => [
+                    'route' => '/unit[/:unit_id]',
+                    'defaults' => [
+                        'controller' => 'SmartCursus\\V1\\Rest\\Unit\\Controller',
+                    ],
+                ],
+            ],
         ],
     ],
     'api-tools-versioning' => [
@@ -120,6 +160,10 @@ return [
             10 => 'smart-cursus.rest.user',
             11 => 'smart-cursus.rest.user-type',
             12 => 'smart-cursus.rest.find-process',
+            13 => 'smart-cursus.rest.degree',
+            14 => 'smart-cursus.rest.session',
+            15 => 'smart-cursus.rest.subject',
+            16 => 'smart-cursus.rest.unit',
         ],
     ],
     'api-tools-rest' => [
@@ -343,6 +387,94 @@ return [
             'collection_class' => \SmartCursus\V1\Rest\FindProcess\FindProcessCollection::class,
             'service_name' => 'FindProcess',
         ],
+        'SmartCursus\\V1\\Rest\\Degree\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\Degree\DegreeResource::class,
+            'route_name' => 'smart-cursus.rest.degree',
+            'route_identifier_name' => 'degree_id',
+            'collection_name' => 'degree',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\Degree\DegreeEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\Degree\DegreeCollection::class,
+            'service_name' => 'Degree',
+        ],
+        'SmartCursus\\V1\\Rest\\Session\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\Session\SessionResource::class,
+            'route_name' => 'smart-cursus.rest.session',
+            'route_identifier_name' => 'session_id',
+            'collection_name' => 'session',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\Session\SessionEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\Session\SessionCollection::class,
+            'service_name' => 'Session',
+        ],
+        'SmartCursus\\V1\\Rest\\Subject\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\Subject\SubjectResource::class,
+            'route_name' => 'smart-cursus.rest.subject',
+            'route_identifier_name' => 'subject_id',
+            'collection_name' => 'subject',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\Subject\SubjectEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\Subject\SubjectCollection::class,
+            'service_name' => 'subject',
+        ],
+        'SmartCursus\\V1\\Rest\\Unit\\Controller' => [
+            'listener' => \SmartCursus\V1\Rest\Unit\UnitResource::class,
+            'route_name' => 'smart-cursus.rest.unit',
+            'route_identifier_name' => 'unit_id',
+            'collection_name' => 'unit',
+            'entity_http_methods' => [
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ],
+            'collection_http_methods' => [
+                0 => 'GET',
+                1 => 'POST',
+            ],
+            'collection_query_whitelist' => [],
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => \SmartCursus\V1\Rest\Unit\UnitEntity::class,
+            'collection_class' => \SmartCursus\V1\Rest\Unit\UnitCollection::class,
+            'service_name' => 'unit',
+        ],
     ],
     'api-tools-content-negotiation' => [
         'controllers' => [
@@ -356,6 +488,10 @@ return [
             'SmartCursus\\V1\\Rest\\User\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\UserType\\Controller' => 'HalJson',
             'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\Degree\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\Session\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\Subject\\Controller' => 'HalJson',
+            'SmartCursus\\V1\\Rest\\Unit\\Controller' => 'HalJson',
         ],
         'accept_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -408,6 +544,26 @@ return [
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ],
+            'SmartCursus\\V1\\Rest\\Degree\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Session\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Subject\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Unit\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ],
         ],
         'content_type_whitelist' => [
             'SmartCursus\\V1\\Rest\\Metacontext\\Controller' => [
@@ -447,6 +603,22 @@ return [
                 1 => 'application/json',
             ],
             'SmartCursus\\V1\\Rest\\FindProcess\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Degree\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Session\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Subject\\Controller' => [
+                0 => 'application/vnd.smart-cursus.v1+json',
+                1 => 'application/json',
+            ],
+            'SmartCursus\\V1\\Rest\\Unit\\Controller' => [
                 0 => 'application/vnd.smart-cursus.v1+json',
                 1 => 'application/json',
             ],
@@ -572,6 +744,54 @@ return [
                 'entity_identifier_name' => 'id',
                 'route_name' => 'smart-cursus.rest.find-process',
                 'route_identifier_name' => 'find_process_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\Degree\DegreeEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.degree',
+                'route_identifier_name' => 'degree_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\Degree\DegreeCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.degree',
+                'route_identifier_name' => 'degree_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\Session\SessionEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.session',
+                'route_identifier_name' => 'session_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\Session\SessionCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.session',
+                'route_identifier_name' => 'session_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\Subject\SubjectEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.subject',
+                'route_identifier_name' => 'subject_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\Subject\SubjectCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.subject',
+                'route_identifier_name' => 'subject_id',
+                'is_collection' => true,
+            ],
+            \SmartCursus\V1\Rest\Unit\UnitEntity::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.unit',
+                'route_identifier_name' => 'unit_id',
+                'hydrator' => \Laminas\Hydrator\ObjectPropertyHydrator::class,
+            ],
+            \SmartCursus\V1\Rest\Unit\UnitCollection::class => [
+                'entity_identifier_name' => 'id',
+                'route_name' => 'smart-cursus.rest.unit',
+                'route_identifier_name' => 'unit_id',
                 'is_collection' => true,
             ],
         ],

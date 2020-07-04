@@ -92,7 +92,7 @@ class ElementmetaprocessResource extends AbstractResourceListener
     public function fetch($id)
     {
         $List= new ElementmetaprocessTable($this->adapter);
-        return $List->fetch($id);
+        return $List->fetchV2($id);
     }
 
     /**

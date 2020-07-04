@@ -1,12 +1,13 @@
 <?php
-namespace SmartCursus\V1\Rest\FindProcess;
+namespace SmartCursus\V1\Rest\Degree;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
-use Models\ExSmarteducation\ElementmetaprocessTable;
+use Models\ExSmarteducation\Degree;
 use Laminas\Db\Adapter\AdapterInterface;
-class FindProcessResource extends AbstractResourceListener
-{   
+class DegreeResource extends AbstractResourceListener
+{
+    public $arr =[];
     private $adapter;
     public function __construct(AdapterInterface $adapter)
     { 
@@ -19,11 +20,8 @@ class FindProcessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    {
-         $data=(array)$data;
-         $List= new ElementmetaprocessTable($this->adapter);
-         return $List->fetchByEveryThingV3($data);
-        //return new ApiProblem(405, 'The POST method has not been defined');
+    { $List= new Degree($this->adapter);
+      return $List->Create($array);
     }
 
     /**
@@ -33,8 +31,17 @@ class FindProcessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function delete($id)
-    {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+    {  $List= new Degree($this->adapter);
+        $fetch=$List->fetch($id);
+        if (empty($fetch))
+      {
+        return new ApiProblem(405, $id.' dont exist');
+      }
+      else{
+        $List->Delete($id);
+         return true;
+      }
+        //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -45,7 +52,7 @@ class FindProcessResource extends AbstractResourceListener
      */
     public function deleteList($data)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for collections');
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -54,13 +61,19 @@ class FindProcessResource extends AbstractResourceListener
      * @param  mixed $id
      * @return ApiProblem|mixed
      */
-    public function fetch($id)
+     /*public function fetch($id)
     {  $pieces = explode(".", $id);
       $arr["name"]=$pieces[0];
        $arr["value"]=$pieces[1];
 
-        $List= new ElementmetaprocessTable($this->adapter);
-        return $List->fetchByEveryThing($arr);
+        $List= new Degree($this->adapter);
+        return $List->fetch2($arr);
+
+    }
+*/
+public function fetch($id)
+    {   $List= new Degree($this->adapter);
+        return $List->fetch($id);
 
     }
     /**
@@ -71,8 +84,10 @@ class FindProcessResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $List= new Degree($this->adapter);
+        return $List->fetchAll();
     }
+    
 
     /**
      * Patch (partial in-place update) a resource
@@ -81,7 +96,7 @@ class FindProcessResource extends AbstractResourceListener
      * @param  mixed $data
      * @return ApiProblem|mixed
      */
-    public function patch($id, $data)
+    public function patch($id,$data)
     {
         return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
     }
@@ -116,7 +131,16 @@ class FindProcessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function update($id, $data)
-    {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+    {   $List= new Degree($this->adapter);
+        $fetch=$List->fetch($id);
+        $array=(array)$data;
+      if (empty($fetch))
+      {
+        return new ApiProblem(405, $id.' dont exist');
+      }
+      else{
+        
+        return $List->Update($array,$id);
+    }
     }
 }
