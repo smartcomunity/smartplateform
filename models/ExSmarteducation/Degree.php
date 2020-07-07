@@ -14,30 +14,38 @@ namespace Models\ExSmarteducation;
         {
             $this->adapter = $adapter;
             $this->TableGateway= new TableGateway('degree', $adapter);
-            $this->TableGateway2= new TableGateway('elementmetaprocess', $adapter);
+            $this->TableGateway2= new TableGateway('session', $adapter);
+            $this->TableGateway3= new TableGateway('unit', $adapter);
+            $this->TableGateway4= new TableGateway('subject', $adapter);
         }
     
         public function fetchAll()
         {
             $arr=[];
+            
             $results1=$this->adapter->query(
-                'SELECT * FROM  degree  AS d 
-                 LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id 
-                 RIGHT JOIN session AS s ON d.idDegree =s.Degree_id ',
+                'SELECT * FROM  degree  AS d
+                 LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id',
                 Adapter::QUERY_MODE_EXECUTE
             );
             $results1=$results1->toArray();
             $i=0;
+            $j=0;
             foreach ($results1 as $key => $row) {
-                $id=$row['idSession'];
-                $results2=$this->adapter->query(
-                    'SELECT * FROM  unit  AS u 
-                 LEFT JOIN session  AS s ON u.Session_id =s.idSession 
-                 RIGHT JOIN subject AS su ON u.idunit =su.unit_id 
-                 where u.Session_id ="'.$id.'"',
-                    Adapter::QUERY_MODE_EXECUTE
-                );
-                $results2=$results2->toArray();
+                $Degree=$row['idDegree'];
+                $rowset2= $this->TableGateway2->select(['Degree_id ' => $Degree]);
+                $results2 = $rowset2->toArray();
+                foreach ($results2 as $key2 => $row2) {
+                    $idSession=$row2['idSession'];
+                    $rowset3= $this->TableGateway3->select(['Session_id' => $idSession]);
+                    $results3 = $rowset3->toArray();
+                }
+                foreach ($results3 as $key3=> $row3) {
+                    $idunit=$row3['idunit'];
+                    $rowset4= $this->TableGateway4->select(['unit_id' => $idunit]);
+                    $results4 = $rowset4->toArray();
+                }
+                
                 $arr[$i]["idDegree"]=$row ['idDegree'];
                 $arr[$i]["Model_id"]=$row ['Model_id'];
                 $arr[$i]["degreeLabel"]=$row ['degreeLabel'];
@@ -53,7 +61,9 @@ namespace Models\ExSmarteducation;
                 $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
                 $arr[$i]["nb_units"]=$row ['nb_units'];
                 $arr[$i]["credit"]=$row ['credit'];
-                $arr[$i]["S.U.S"]=$results2;
+                $arr[$i]["session"]=$results2;
+                $arr[$i]["unit"]=$results3;
+                $arr[$i]["subject"]=$results4;
                 $i++;
             }
             return $arr;
