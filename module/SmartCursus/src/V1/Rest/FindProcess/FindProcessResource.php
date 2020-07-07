@@ -5,11 +5,12 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Models\ExSmarteducation\ElementmetaprocessTable;
 use Laminas\Db\Adapter\AdapterInterface;
+
 class FindProcessResource extends AbstractResourceListener
-{   
+{
     private $adapter;
     public function __construct(AdapterInterface $adapter)
-    { 
+    {
         $this->adapter = $adapter;
     }
     /**
@@ -20,9 +21,9 @@ class FindProcessResource extends AbstractResourceListener
      */
     public function create($data)
     {
-         $data=(array)$data;
-         $List= new ElementmetaprocessTable($this->adapter);
-         return $List->fetchByEveryThingV3($data);
+        $data=(array)$data;
+        $List= new ElementmetaprocessTable($this->adapter);
+        return $List->fetchByEveryThingV2($data);
         //return new ApiProblem(405, 'The POST method has not been defined');
     }
 
@@ -55,13 +56,13 @@ class FindProcessResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function fetch($id)
-    {  $pieces = explode(".", $id);
-      $arr["name"]=$pieces[0];
-       $arr["value"]=$pieces[1];
+    {
+        $pieces = explode(".", $id);
+        $arr["name"]=$pieces[0];
+        $arr["value"]=$pieces[1];
 
         $List= new ElementmetaprocessTable($this->adapter);
         return $List->fetchByEveryThing($arr);
-
     }
     /**
      * Fetch all or a subset of resources
