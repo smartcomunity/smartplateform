@@ -18,11 +18,48 @@ namespace Models\ExSmarteducation;
             $this->TableGateway3= new TableGateway('unit', $adapter);
             $this->TableGateway4= new TableGateway('subject', $adapter);
         }
-    
+        public function FindSUS($id)
+        {
+            $results1=$this->adapter->query(
+                'SELECT * FROM  unit  AS u 
+                 LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                 where u.Session_id ="'.$id.'"',
+                Adapter::QUERY_MODE_EXECUTE
+            );
+            $results1=$results1->toArray();
+            $arr=[];
+            $j=0;
+            foreach ($results1 as $key => $row) {
+                $arr[$j]["Session_id"]=$row ['idSession'];
+                $arr[$j]["SessionType"]=$row ['SessionType'];
+                $arr[$j]["SessionNumber"]=$row ['SessionNumber'];
+                $arr[$j]["idunit"]=$row ['idunit'];
+                $arr[$j]["unitLabel"]=$row ['unitLabel'];
+                $arr[$j]["unitcredit"]=$row['unitcredit'];
+                $arr[$j]["unitcoeficient"]=$row ['unitcoeficient'];
+                $arr[$j]["unitNature"]=$row ['unitNature'];
+                $arr[$j]["unitRegimen"]=$row ['unitRegimen'];
+                $j++;
+                $idunit=$row['idunit'];
+                $results2=$this->adapter->query(
+                    'SELECT * FROM  unit  AS u 
+                     RIGHT JOIN subject AS su ON u.idunit =su.unit_id
+                     where u.idunit ="'.$idunit.'"',
+                    Adapter::QUERY_MODE_EXECUTE
+                );
+                $results2=$results2->toArray();
+                foreach ($results2 as $key2 => $row2) {
+                    $arr[$j]["subject"]=$results2;
+                    $j++;
+                }
+            }
+            return $arr;
+        }
         public function fetchAll()
         {
             $arr=[];
             $arr2=[];
+            $arr3=[];
             $results1=$this->adapter->query(
                 'SELECT * FROM  degree  AS d
                  LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id',
@@ -38,23 +75,49 @@ namespace Models\ExSmarteducation;
                 $results2 = $rowset2->toArray();
                 $degree='';
                 $k=0;
+                $j=0;
                 
                 foreach ($results2 as $key2 => $row2) {
                     $idSession=$row2['idSession'];
+                    // $arr2=$this->FindSUS($idSession);
+                    $arr3[$j]=$this->FindSUS($idSession);
+                    $j++;
                     /*$rowset3= $this->TableGateway3->select(['Session_id' => $idSession]);
                     $results3 = $rowset3->toArray();
                     $arr2[$k]=$results3;
                     $k++;*/
-                    $res=$this->adapter->query(
-                        'SELECT * FROM  unit  AS u 
-                         LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                    /*$res=$this->adapter->query(
+                        'SELECT * FROM  unit  AS u
+                         LEFT JOIN session  AS s ON u.Session_id =s.idSession
                          RIGHT JOIN subject AS su ON u.idunit =su.unit_id
                          where u.Session_id ="'.$idSession.'"',
                         Adapter::QUERY_MODE_EXECUTE
                     );
-                    $res=$res->toArray();
+
+                    foreach ($res as $key3 => $row3) {
+                        $arr2[$j]["Session_id"]=$row3 ['Session_id'];
+                        $arr2[$j]["SessionType"]=$row3 ['SessionType'];
+                        $arr2[$j]["SessionNumber"]=$row3 ['SessionNumber'];
+                        $arr2[$j]["idunit"]=$row3 ['idunit'];
+                        $arr2[$j]["unitLabel"]=$row3 ['unitLabel'];
+                        $arr2[$j]["unitcredit"]=$row3 ['unitcredit'];
+                        $arr2[$j]["unitcoeficient"]=$row3 ['unitcoeficient'];
+                        $arr2[$j]["unitNature"]=$row3 ['unitNature'];
+                        $arr2[$j]["unitRegimen"]=$row3 ['unitRegimen'];
+                        $arr2[$j]["idsubject"]=$row3 ['idsubject'];
+                        $arr2[$j]["subjectlabel"]=$row3 ['subjectlabel'];
+                        $arr2[$j]["subjectCoefficient"]=$row3 ['subjectCoefficient'];
+                        $arr2[$j]["subjectcredit"]=$row3 ['subjectcredit'];
+                        $arr2[$j]["subjectRegimen"]=$row3 ['subjectRegimen'];
+                        $arr2[$j]["hourlyVolume"]=$row3 ['hourlyVolume'];
+                        $j++;
+                        $arr3[$k]=$arr2;
+                        $k++;
+                    }
+
+                    /*$res=$res->toArray();
                     $arr2[$k]=$res;
-                    $k++;
+                    $k++;*/
                 }
                 /*foreach ($results3 as $key3=> $row3) {
                     $idunit=$row3['idunit'];
@@ -80,7 +143,7 @@ namespace Models\ExSmarteducation;
                 $arr[$i]["credit"]=$row ['credit'];
                 //$arr[$i]["session"]=$results2;
                 //$arr[$i]["unit"]=$arr2;
-                $arr[$i]["S.U.S"]=$arr2;
+                $arr[$i]["S.U.S"]=$arr3;
                 //$arr[$i]["unit"]=$results3;
                 // $arr[$i]["subject"]=$results4;
                 $i++;
