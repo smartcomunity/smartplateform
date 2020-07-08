@@ -41,8 +41,17 @@ namespace Models\ExSmarteducation;
         }
         public function fetch($id)
         {
-            $rowset  = $this->TableGateway->select(['idunit' => $id]);
-            return $Row   = $rowset->current();
+            $results=$this->adapter->query(
+                'SELECT * FROM  unit  AS u 
+                 LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                 RIGHT JOIN subject AS su ON u.idunit =su.unit_id
+                 where u.Session_id ="'.$id.'"',
+                Adapter::QUERY_MODE_EXECUTE
+            );
+            $results=$results->toArray();
+            return $results;
+            /*$rowset  = $this->TableGateway->select(['idunit' => $id]);
+            return $Row   = $rowset->current();*/
         }
         public function Create($data)
         {

@@ -22,7 +22,7 @@ namespace Models\ExSmarteducation;
         public function fetchAll()
         {
             $arr=[];
-            
+            $arr2=[];
             $results1=$this->adapter->query(
                 'SELECT * FROM  degree  AS d
                  LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id',
@@ -31,20 +31,37 @@ namespace Models\ExSmarteducation;
             $results1=$results1->toArray();
             $i=0;
             $j=0;
+            
             foreach ($results1 as $key => $row) {
                 $Degree=$row['idDegree'];
-                $rowset2= $this->TableGateway2->select(['Degree_id ' => $Degree]);
+                $rowset2= $this->TableGateway2->select(['Degree_id' => $Degree]);
                 $results2 = $rowset2->toArray();
+                $degree='';
+                $k=0;
+                
                 foreach ($results2 as $key2 => $row2) {
                     $idSession=$row2['idSession'];
-                    $rowset3= $this->TableGateway3->select(['Session_id' => $idSession]);
+                    /*$rowset3= $this->TableGateway3->select(['Session_id' => $idSession]);
                     $results3 = $rowset3->toArray();
+                    $arr2[$k]=$results3;
+                    $k++;*/
+                    $res=$this->adapter->query(
+                        'SELECT * FROM  unit  AS u 
+                         LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                         RIGHT JOIN subject AS su ON u.idunit =su.unit_id
+                         where u.Session_id ="'.$idSession.'"',
+                        Adapter::QUERY_MODE_EXECUTE
+                    );
+                    $res=$res->toArray();
+                    $arr2[$k]=$res;
+                    $k++;
                 }
-                foreach ($results3 as $key3=> $row3) {
+                /*foreach ($results3 as $key3=> $row3) {
                     $idunit=$row3['idunit'];
                     $rowset4= $this->TableGateway4->select(['unit_id' => $idunit]);
                     $results4 = $rowset4->toArray();
                 }
+                */
                 
                 $arr[$i]["idDegree"]=$row ['idDegree'];
                 $arr[$i]["Model_id"]=$row ['Model_id'];
@@ -61,9 +78,11 @@ namespace Models\ExSmarteducation;
                 $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
                 $arr[$i]["nb_units"]=$row ['nb_units'];
                 $arr[$i]["credit"]=$row ['credit'];
-                $arr[$i]["session"]=$results2;
-                $arr[$i]["unit"]=$results3;
-                $arr[$i]["subject"]=$results4;
+                //$arr[$i]["session"]=$results2;
+                //$arr[$i]["unit"]=$arr2;
+                $arr[$i]["S.U.S"]=$arr2;
+                //$arr[$i]["unit"]=$results3;
+                // $arr[$i]["subject"]=$results4;
                 $i++;
             }
             return $arr;
