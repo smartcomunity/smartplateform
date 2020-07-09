@@ -18,113 +18,47 @@ namespace Models\ExSmarteducation;
             $this->TableGateway3= new TableGateway('unit', $adapter);
             $this->TableGateway4= new TableGateway('subject', $adapter);
         }
-        public function FindSUS($id)
-        {
-            $results1=$this->adapter->query(
-                'SELECT * FROM  unit  AS u 
-                 LEFT JOIN session  AS s ON u.Session_id =s.idSession 
-                 where u.Session_id ="'.$id.'"',
-                Adapter::QUERY_MODE_EXECUTE
-            );
-            $results1=$results1->toArray();
-            $arr=[];
-            $j=0;
-            foreach ($results1 as $key => $row) {
-                $arr[$j]["Session_id"]=$row ['idSession'];
-                $arr[$j]["SessionType"]=$row ['SessionType'];
-                $arr[$j]["SessionNumber"]=$row ['SessionNumber'];
-                $arr[$j]["idunit"]=$row ['idunit'];
-                $arr[$j]["unitLabel"]=$row ['unitLabel'];
-                $arr[$j]["unitcredit"]=$row['unitcredit'];
-                $arr[$j]["unitcoeficient"]=$row ['unitcoeficient'];
-                $arr[$j]["unitNature"]=$row ['unitNature'];
-                $arr[$j]["unitRegimen"]=$row ['unitRegimen'];
-                $j++;
-                $idunit=$row['idunit'];
-                $results2=$this->adapter->query(
-                    'SELECT * FROM  unit  AS u 
-                     RIGHT JOIN subject AS su ON u.idunit =su.unit_id
-                     where u.idunit ="'.$idunit.'"',
-                    Adapter::QUERY_MODE_EXECUTE
-                );
-                $results2=$results2->toArray();
-                foreach ($results2 as $key2 => $row2) {
-                    $arr[$j]["subject"]=$results2;
-                    $j++;
-                }
-            }
-            return $arr;
-        }
+        
         public function fetchAll()
         {
             $arr=[];
             $arr2=[];
             $arr3=[];
+            $arr4=[];
             $results1=$this->adapter->query(
                 'SELECT * FROM  degree  AS d
                  LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id',
                 Adapter::QUERY_MODE_EXECUTE
             );
             $results1=$results1->toArray();
+
+            
             $i=0;
             $j=0;
-            
+            $k=0;
+            $l=0;
+            $m=0;
+            $y=0;
             foreach ($results1 as $key => $row) {
                 $Degree=$row['idDegree'];
                 $rowset2= $this->TableGateway2->select(['Degree_id' => $Degree]);
                 $results2 = $rowset2->toArray();
-                $degree='';
-                $k=0;
-                $j=0;
+                
                 
                 foreach ($results2 as $key2 => $row2) {
-                    $idSession=$row2['idSession'];
-                    // $arr2=$this->FindSUS($idSession);
-                    $arr3[$j]=$this->FindSUS($idSession);
+                    $arr2[$j]["idSession"]=$row2 ['idSession'];
+                    $arr2[$j]["Degree_id"]=$row2 ['Degree_id'];
                     $j++;
-                    /*$rowset3= $this->TableGateway3->select(['Session_id' => $idSession]);
-                    $results3 = $rowset3->toArray();
-                    $arr2[$k]=$results3;
-                    $k++;*/
-                    /*$res=$this->adapter->query(
-                        'SELECT * FROM  unit  AS u
-                         LEFT JOIN session  AS s ON u.Session_id =s.idSession
-                         RIGHT JOIN subject AS su ON u.idunit =su.unit_id
-                         where u.Session_id ="'.$idSession.'"',
-                        Adapter::QUERY_MODE_EXECUTE
-                    );
-
-                    foreach ($res as $key3 => $row3) {
-                        $arr2[$j]["Session_id"]=$row3 ['Session_id'];
-                        $arr2[$j]["SessionType"]=$row3 ['SessionType'];
-                        $arr2[$j]["SessionNumber"]=$row3 ['SessionNumber'];
-                        $arr2[$j]["idunit"]=$row3 ['idunit'];
-                        $arr2[$j]["unitLabel"]=$row3 ['unitLabel'];
-                        $arr2[$j]["unitcredit"]=$row3 ['unitcredit'];
-                        $arr2[$j]["unitcoeficient"]=$row3 ['unitcoeficient'];
-                        $arr2[$j]["unitNature"]=$row3 ['unitNature'];
-                        $arr2[$j]["unitRegimen"]=$row3 ['unitRegimen'];
-                        $arr2[$j]["idsubject"]=$row3 ['idsubject'];
-                        $arr2[$j]["subjectlabel"]=$row3 ['subjectlabel'];
-                        $arr2[$j]["subjectCoefficient"]=$row3 ['subjectCoefficient'];
-                        $arr2[$j]["subjectcredit"]=$row3 ['subjectcredit'];
-                        $arr2[$j]["subjectRegimen"]=$row3 ['subjectRegimen'];
-                        $arr2[$j]["hourlyVolume"]=$row3 ['hourlyVolume'];
-                        $j++;
-                        $arr3[$k]=$arr2;
-                        $k++;
-                    }
-
-                    /*$res=$res->toArray();
-                    $arr2[$k]=$res;
-                    $k++;*/
-                }
-                /*foreach ($results3 as $key3=> $row3) {
-                    $idunit=$row3['idunit'];
-                    $rowset4= $this->TableGateway4->select(['unit_id' => $idunit]);
+                    $session=$row2 ['idSession'];
+                    $rowset4= $this->TableGateway3->select(['Session_id' => $session]);
                     $results4 = $rowset4->toArray();
+                    foreach ($results4 as $key4 => $row4) {
+                        $arr4[$y]["Session_id"]=$row4 ['Session_id'];
+                        $arr4[$y]["idunit"]=$row4['idunit'];
+                        $y++;
+                    }
                 }
-                */
+
                 
                 $arr[$i]["idDegree"]=$row ['idDegree'];
                 $arr[$i]["Model_id"]=$row ['Model_id'];
@@ -141,13 +75,74 @@ namespace Models\ExSmarteducation;
                 $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
                 $arr[$i]["nb_units"]=$row ['nb_units'];
                 $arr[$i]["credit"]=$row ['credit'];
-                //$arr[$i]["session"]=$results2;
-                //$arr[$i]["unit"]=$arr2;
-                $arr[$i]["S.U.S"]=$arr3;
-                //$arr[$i]["unit"]=$results3;
-                // $arr[$i]["subject"]=$results4;
+               
                 $i++;
             }
+            
+            for ($k = 0; $k < count($arr2); $k++) {
+                $results3=$this->adapter->query(
+                    'SELECT * FROM  unit  AS u 
+                     LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                     where u.Session_id ="'.$arr2[$k]['idSession'].'"',
+                    Adapter::QUERY_MODE_EXECUTE
+                );
+                
+                $results3=$results3->toArray();
+                $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$k]['Degree_id']);
+                $l=0;
+                $m=0;
+                while ($l< count($keys)) {
+                    foreach ($results3 as $key3 => $row3) {
+                        $arr3[$m]["Session_id"]=$row3 ['Session_id'];
+                        $arr3[$m]["SessionType"]=$row3 ['SessionType'];
+                        $arr3[$m]["SessionNumber"]=$row3 ['SessionNumber'];
+                        $m++;
+                    }
+                    $x=$keys[$l];
+                    $l++;
+                    $arr[$x]["session"]=$arr3;
+                    $c=(count($arr3));
+                    while ($m<$c) {
+                        unset($arr3[$c]);
+                        $c=$c-1;
+                    }
+                }
+            }
+            
+            for ($k = 0; $k < count($arr2); $k++) {
+                $results3=$this->adapter->query(
+                    'SELECT * FROM  unit  AS u 
+                     LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                     where u.Session_id ="'.$arr2[$k]['idSession'].'"',
+                    Adapter::QUERY_MODE_EXECUTE
+                );
+                
+                $results3=$results3->toArray();
+                $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$k]['Degree_id']);
+                $l=0;
+                $m=0;
+                while ($l< count($keys)) {
+                    $x=$keys[$l];
+                    $l++;
+                    foreach ($results3 as $key3 => $row3) {
+                        $arr3[$m]["idunit"]=$row3 ['idunit'];
+                        $arr3[$m]["unitLabel"]=$row3 ['unitLabel'];
+                        $arr3[$m]["unitcredit"]=$row3['unitcredit'];
+                        $arr3[$m]["unitcoeficient"]=$row3 ['unitcoeficient'];
+                        $arr3[$m]["unitNature"]=$row3 ['unitNature'];
+                        $arr3[$m]["unitRegimen"]=$row3 ['unitRegimen'];
+                        $m++;
+                    }
+                    
+                    $arr[$x]["Unit"]=$arr3;
+                    $c=(count($arr3));
+                    while ($m<$c) {
+                        unset($arr3[$c]);
+                        $c=$c-1;
+                    }
+                }
+            }
+
             return $arr;
         }
 
