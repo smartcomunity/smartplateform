@@ -37,22 +37,8 @@ namespace Models\ExSmarteducation;
         }
         public function fetch($id)
         {
-            $rowset  = $this->TableGateway->select(['unit_id' => $id]);
-            //return $Row   = $rowset->current();
-            $results=$rowset->toArray();
-            $i=0;
-            $arr=[];
-            foreach ($results as $key => $row) {
-                $arr[$i]["idsubject"]=$row ['idsubject'];
-                $arr[$i]["subjectlabel"]=$row ['subjectlabel'];
-                $arr[$i]["subjectCoefficient"]=$row ['subjectCoefficient'];
-                $arr[$i]["subjectcredit"]=$row ['subjectcredit'];
-                $arr[$i]["subjectRegimen"]=$row ['subjectRegimen'];
-                $arr[$i]["hourlyVolume"]=$row ['hourlyVolume'];
-                $arr[$i]["unit_id"]=$row ['unit_id'];
-                $i++;
-            }
-            return $arr;
+            $rowset  = $this->TableGateway->select(['idsubject' => $id]);
+            return $Row   = $rowset->current();
         }
         public function Create($data)
         {

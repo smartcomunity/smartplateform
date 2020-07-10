@@ -31,8 +31,6 @@ namespace Models\ExSmarteducation;
                 Adapter::QUERY_MODE_EXECUTE
             );
             $results1=$results1->toArray();
-
-            
             $i=0;
             $j=0;
             $k=0;
@@ -43,20 +41,32 @@ namespace Models\ExSmarteducation;
                 $Degree=$row['idDegree'];
                 $rowset2= $this->TableGateway2->select(['Degree_id' => $Degree]);
                 $results2 = $rowset2->toArray();
-                
-                
                 foreach ($results2 as $key2 => $row2) {
                     $arr2[$j]["idSession"]=$row2 ['idSession'];
                     $arr2[$j]["Degree_id"]=$row2 ['Degree_id'];
-                    $j++;
                     $session=$row2 ['idSession'];
                     $rowset4= $this->TableGateway3->select(['Session_id' => $session]);
                     $results4 = $rowset4->toArray();
                     foreach ($results4 as $key4 => $row4) {
-                        $arr4[$y]["Session_id"]=$row4 ['Session_id'];
-                        $arr4[$y]["idunit"]=$row4['idunit'];
-                        $y++;
+                        $keys = array_keys(array_column($arr2, 'idSession'), $row4 ['Session_id']);
+                        $l=0;
+                        $m=0;
+                        while ($l<count($keys)) {
+                            $x=$keys[$l];
+                            $l++;
+                            foreach ($results4 as $k4 => $r4) {
+                                $arr3[$m]["idunit"]=$r4 ['idunit'];
+                                $m++;
+                            }
+                            $arr2[$x]["idunit"]=$arr3;
+                            $c=(count($arr3));
+                            while ($m<=$c) {
+                                $c=$c-1;
+                                unset($arr3[$c]);
+                            }
+                        }
                     }
+                    $j++;
                 }
 
                 
@@ -78,7 +88,7 @@ namespace Models\ExSmarteducation;
                
                 $i++;
             }
-            
+            //session part
             for ($k = 0; $k < count($arr2); $k++) {
                 $results3=$this->adapter->query(
                     'SELECT * FROM  unit  AS u 
@@ -103,46 +113,102 @@ namespace Models\ExSmarteducation;
                     $arr[$x]["session"]=$arr3;
                     $c=(count($arr3));
                     while ($m<$c) {
-                        unset($arr3[$c]);
                         $c=$c-1;
+                        unset($arr3[$c]);
                     }
                 }
             }
-            
+            //unit part
             for ($k = 0; $k < count($arr2); $k++) {
-                $results3=$this->adapter->query(
+                $results5=$this->adapter->query(
                     'SELECT * FROM  unit  AS u 
                      LEFT JOIN session  AS s ON u.Session_id =s.idSession 
                      where u.Session_id ="'.$arr2[$k]['idSession'].'"',
                     Adapter::QUERY_MODE_EXECUTE
                 );
                 
-                $results3=$results3->toArray();
+                $results5=$results5->toArray();
                 $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$k]['Degree_id']);
                 $l=0;
                 $m=0;
                 while ($l< count($keys)) {
                     $x=$keys[$l];
                     $l++;
-                    foreach ($results3 as $key3 => $row3) {
-                        $arr3[$m]["idunit"]=$row3 ['idunit'];
-                        $arr3[$m]["unitLabel"]=$row3 ['unitLabel'];
-                        $arr3[$m]["unitcredit"]=$row3['unitcredit'];
-                        $arr3[$m]["unitcoeficient"]=$row3 ['unitcoeficient'];
-                        $arr3[$m]["unitNature"]=$row3 ['unitNature'];
-                        $arr3[$m]["unitRegimen"]=$row3 ['unitRegimen'];
+                    foreach ($results5 as $key5 => $row5) {
+                        $arr5[$m]["idunit"]=$row5 ['idunit'];
+                        $arr5[$m]["unitLabel"]=$row5 ['unitLabel'];
+                        $arr5[$m]["unitcredit"]=$row5['unitcredit'];
+                        $arr5[$m]["unitcoeficient"]=$row5 ['unitcoeficient'];
+                        $arr5[$m]["unitNature"]=$row5 ['unitNature'];
+                        $arr5[$m]["unitRegimen"]=$row5 ['unitRegimen'];
                         $m++;
                     }
                     
-                    $arr[$x]["Unit"]=$arr3;
-                    $c=(count($arr3));
+                    $arr[$x]["Unit"]=$arr5;
+                    $c=(count($arr5));
                     while ($m<$c) {
-                        unset($arr3[$c]);
+                        unset($arr5[$c]);
                         $c=$c-1;
                     }
                 }
             }
+            //subject part
+            for ($k = 0; $k < count($arr2); $k++) {
+                $ok=false;
+                $arr7=[];
+                
+                $n=0;
+                foreach ($arr2 as $key => $value) {
+                    foreach ($value as $sub_key => $sub_val) {
+                        if (is_array($sub_val)) {
+                            foreach ($sub_val as $k1 => $v) {
+                                $ke = array_keys(array_column($arr2, 'idunit'), $sub_val);
+                                $a=0;
+                                while ($a< count($ke)) {
+                                    $x=$ke[$a];
+                                    $a++;
+                                    $arr7[$n]=$v;
+                                    $arr7[$n]['index']=$x;
+                                    $n++;
+                                }
+                                $ok=true;
+                            }
+                        }
+                    }
+                }
+                $n=$n-1;
+                
+                for ($e=0;$e<=$n;$e++) {
+                    $idunit=$arr7[$e]['idunit'];
+                    $results6=$this->adapter->query(
+                        'SELECT * FROM  subject  AS s
+                       where s.unit_id ="'.$idunit.'"',
+                        Adapter::QUERY_MODE_EXECUTE
+                    );
+                    $results6=$results6->toArray();
+                    $index=$arr7[$e]['index'];
+                    $l=0;
+                    $m=0;
+                    foreach ($results6 as $key6 => $row6) {
+                        $arr6[$m]["idsubject"]=$row6 ['idsubject'];
+                        $arr6[$m]["subjectlabel"]=$row6 ['subjectlabel'];
+                        $arr6[$m]["subjectCoefficient"]=$row6 ['subjectCoefficient'];
+                        $arr6[$m]["subjectcredit"]=$row6 ['subjectcredit'];
+                        $arr6[$m]["subjectRegimen"]=$row6 ['subjectRegimen'];
+                        $arr6[$m]["hourlyVolume"]=$row6 ['hourlyVolume'];
+                        $arr6[$m]["unit_id"]=$row6 ['unit_id'];
+                        $m++;
+                    }
 
+                    $arr[$index]["subject"]=$arr6;
+                   
+                    $c=(count($arr6));
+                    while ($m<$c) {
+                        unset($arr6[$c]);
+                        $c=$c-1;
+                    }
+                }
+            }
             return $arr;
         }
 
