@@ -22,9 +22,11 @@ class DegreeResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $d=[];
         $List= new Degree($this->adapter);
         $array=(array)$data;
-        return $List->Create($array);
+        $d['idDegree']=$List->Create($array);
+        return $d ;
     }
 
     /**

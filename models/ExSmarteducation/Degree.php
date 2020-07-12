@@ -119,21 +119,22 @@ namespace Models\ExSmarteducation;
                 }
             }
             //unit part
-            for ($k = 0; $k < count($arr2); $k++) {
+            for ($k = 0; $k <count($arr2); $k++) {
                 $results5=$this->adapter->query(
-                    'SELECT * FROM  unit  AS u 
-                     LEFT JOIN session  AS s ON u.Session_id =s.idSession 
-                     where u.Session_id ="'.$arr2[$k]['idSession'].'"',
+                    'SELECT * FROM  unit  AS u
+                       LEFT JOIN session  AS s ON u.Session_id =s.idSession
+                       where u.Session_id ="'.$arr2[$k]['idSession'].'"',
                     Adapter::QUERY_MODE_EXECUTE
                 );
-                
+              
                 $results5=$results5->toArray();
                 $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$k]['Degree_id']);
                 $l=0;
                 $m=0;
-                while ($l< count($keys)) {
+                while ($l<count($keys)) {
                     $x=$keys[$l];
                     $l++;
+                    
                     foreach ($results5 as $key5 => $row5) {
                         $arr5[$m]["idunit"]=$row5 ['idunit'];
                         $arr5[$m]["unitLabel"]=$row5 ['unitLabel'];
@@ -141,14 +142,33 @@ namespace Models\ExSmarteducation;
                         $arr5[$m]["unitcoeficient"]=$row5 ['unitcoeficient'];
                         $arr5[$m]["unitNature"]=$row5 ['unitNature'];
                         $arr5[$m]["unitRegimen"]=$row5 ['unitRegimen'];
+                        $arr5[$m]["session_id"]=$row5 ['idSession'];
                         $m++;
                     }
-                    
-                    $arr[$x]["Unit"]=$arr5;
+                    if (empty($arr[$x]["Unit"])) {
+                        $arr[$x]["Unit"]=$arr5;
+                    } else {
+                        $arr9=[];
+                        $arr9=$arr[$x]["Unit"];
+                        unset($arr[$x]["Unit"]);
+                        $counter=count($arr9);
+                        //$arr9[$counter]=$arr5;
+                        foreach ($arr9 as $key9 => $row9) {
+                            $arr5[$m]["idunit"]=$row9 ['idunit'];
+                            $arr5[$m]["unitLabel"]=$row9 ['unitLabel'];
+                            $arr5[$m]["unitcredit"]=$row9['unitcredit'];
+                            $arr5[$m]["unitcoeficient"]=$row9 ['unitcoeficient'];
+                            $arr5[$m]["unitNature"]=$row9 ['unitNature'];
+                            $arr5[$m]["unitRegimen"]=$row9 ['unitRegimen'];
+                            $arr5[$m]["session_id"]=$row9 ['session_id'];
+                            $m++;
+                        }
+                        $arr[$x]["Unit"]=$arr5;
+                    }
                     $c=(count($arr5));
-                    while ($m<$c) {
-                        unset($arr5[$c]);
+                    while ($c>=0) {
                         $c=$c-1;
+                        unset($arr5[$c]);
                     }
                 }
             }
@@ -168,7 +188,7 @@ namespace Models\ExSmarteducation;
                                     $x=$ke[$a];
                                     $a++;
                                     $arr7[$n]=$v;
-                                    $arr7[$n]['index']=$x;
+                                    $arr7[$n]['index']=$key;
                                     $n++;
                                 }
                                 $ok=true;
@@ -177,8 +197,8 @@ namespace Models\ExSmarteducation;
                     }
                 }
                 $n=$n-1;
-                
-                for ($e=0;$e<=$n;$e++) {
+                //
+                for ($e=0;$e<$n;$e++) {
                     $idunit=$arr7[$e]['idunit'];
                     $results6=$this->adapter->query(
                         'SELECT * FROM  subject  AS s
@@ -186,9 +206,14 @@ namespace Models\ExSmarteducation;
                         Adapter::QUERY_MODE_EXECUTE
                     );
                     $results6=$results6->toArray();
+                    
+                    // $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$index]['Degree_id']);
                     $index=$arr7[$e]['index'];
                     $l=0;
                     $m=0;
+                    //while ($l<count($keys)) {
+                    $x=$keys[$l];
+                    $l++;
                     foreach ($results6 as $key6 => $row6) {
                         $arr6[$m]["idsubject"]=$row6 ['idsubject'];
                         $arr6[$m]["subjectlabel"]=$row6 ['subjectlabel'];
@@ -200,15 +225,50 @@ namespace Models\ExSmarteducation;
                         $m++;
                     }
 
-                    $arr[$index]["subject"]=$arr6;
-                   
-                    $c=(count($arr6));
-                    while ($m<$c) {
-                        unset($arr6[$c]);
+                    //$arr[$index]["subject"]=$arr6;
+                    ///////////////////////////////////////////////////////
+    
+                    if (empty($arr[$index]["subject"])) {
+                        $arr[$index]["subject"]=$arr6;
+                        $c=(count($arr6));
+                        while ($c>0) {
+                            $c=$c-1;
+                            unset($arr6[$c]);
+                        }
+                    } else {
+                        $arr10=[];
+                        $arr10=$arr[$index]["subject"];
+                        unset($arr[$index]["subject"]);
+                        $counter=count($arr10);
+                        //$arr9[$counter]=$arr5;
+                        foreach ($arr10 as $key10 => $row10) {
+                            $arr6[$m]["idsubject"]=$row10 ['idsubject'];
+                            $arr6[$m]["subjectlabel"]=$row10 ['subjectlabel'];
+                            $arr6[$m]["subjectCoefficient"]=$row10 ['subjectCoefficient'];
+                            $arr6[$m]["subjectcredit"]=$row10 ['subjectcredit'];
+                            $arr6[$m]["subjectRegimen"]=$row10 ['subjectRegimen'];
+                            $arr6[$m]["hourlyVolume"]=$row10 ['hourlyVolume'];
+                            $arr6[$m]["unit_id"]=$row10 ['unit_id'];
+                            $m++;
+                        }
+                        $arr[$index]["subject"]=$arr6;
+                        $c=(count($arr6));
+                        while ($c>0) {
+                            $c=$c-1;
+                            unset($arr6[$c]);
+                            //  }
+                        }
+                        /////////////////////////////////////////////////////////
+                   /* $c=(count($arr6));
+                    while ($c>0) {
                         $c=$c-1;
+                        unset($arr6[$c]);
+                    }*/
                     }
                 }
             }
+           
+            
             return $arr;
         }
 
@@ -269,7 +329,13 @@ namespace Models\ExSmarteducation;
         
         public function Create($data)
         {
-            return $this->TableGateway->insert($data);
+            $arr=[];
+            $this->TableGateway->insert($data);
+            $rowset = $this->TableGateway->select();
+            $results = $rowset->toArray();
+            $arr= array_column($results, 'idDegree');
+           
+            return max($arr);
         }
         public function Update($data, $id)
         {
