@@ -5,11 +5,12 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Models\ExSmarteducation\Unit;
 use Laminas\Db\Adapter\AdapterInterface;
+
 class UnitResource extends AbstractResourceListener
 {
     private $adapter;
     public function __construct(AdapterInterface $adapter)
-    { 
+    {
         $this->adapter = $adapter;
     }
     /**
@@ -19,7 +20,8 @@ class UnitResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    {  $List= new Unit($this->adapter);
+    {
+        $List= new Unit($this->adapter);
         $array=(array)$data;
         return $List->Create($array);
     }
@@ -31,16 +33,15 @@ class UnitResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function delete($id)
-    {  $List= new Unit($this->adapter);
+    {
+        $List= new Unit($this->adapter);
         $fetch=$List->fetch($id);
-        if (empty($fetch))
-      {
-        return new ApiProblem(405, $id.' dont exist');
-      }
-      else{
-        $List->Delete($id);
-         return true;
-      }
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' dont exist');
+        } else {
+            $List->Delete($id);
+            return true;
+        }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
@@ -61,20 +62,20 @@ class UnitResource extends AbstractResourceListener
      * @param  mixed $id
      * @return ApiProblem|mixed
      */
-     /*public function fetch($id)
+    /*public function fetch($id)
     {  $pieces = explode(".", $id);
-      $arr["name"]=$pieces[0];
-       $arr["value"]=$pieces[1];
+     $arr["name"]=$pieces[0];
+      $arr["value"]=$pieces[1];
 
-        $List= new Unit($this->adapter);
-        return $List->fetch2($arr);
+       $List= new Unit($this->adapter);
+       return $List->fetch2($arr);
 
     }
 */
-public function fetch($id)
-    {   $List= new Unit($this->adapter);
+    public function fetch($id)
+    {
+        $List= new Unit($this->adapter);
         return $List->fetch($id);
-
     }
     /**
      * Fetch all or a subset of resources
@@ -96,7 +97,7 @@ public function fetch($id)
      * @param  mixed $data
      * @return ApiProblem|mixed
      */
-    public function patch($id,$data)
+    public function patch($id, $data)
     {
         return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
     }
@@ -131,16 +132,14 @@ public function fetch($id)
      * @return ApiProblem|mixed
      */
     public function update($id, $data)
-    {   $List= new Unit($this->adapter);
+    {
+        $List= new Unit($this->adapter);
         $fetch=$List->fetch($id);
         $array=(array)$data;
-      if (empty($fetch))
-      {
-        return new ApiProblem(405, $id.' dont exist');
-      }
-      else{
-        
-        return $List->Update($array,$id);
-    }
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' dont exist');
+        } else {
+            return $List->Update($array, $id);
+        }
     }
 }

@@ -5,12 +5,13 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\Rest\AbstractResourceListener;
 use Models\ExSmarteducation\Session;
 use Laminas\Db\Adapter\AdapterInterface;
+
 class SessionResource extends AbstractResourceListener
 {
     public $arr =[];
     private $adapter;
     public function __construct(AdapterInterface $adapter)
-    { 
+    {
         $this->adapter = $adapter;
     }
     /**
@@ -20,8 +21,10 @@ class SessionResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    { $List= new Session($this->adapter);
-       return $List->Create($array);
+    {
+        $List= new Session($this->adapter);
+        $array=(array)$data;
+        return $List->Create($array);
     }
 
     /**
@@ -31,16 +34,15 @@ class SessionResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function delete($id)
-    {  $List= new Session($this->adapter);
+    {
+        $List= new Session($this->adapter);
         $fetch=$List->fetch($id);
-        if (empty($fetch))
-      {
-        return new ApiProblem(405, $id.' dont exist');
-      }
-      else{
-         $List->Delete($id);
-         return true;
-      }
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' dont exist');
+        } else {
+            $List->Delete($id);
+            return true;
+        }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
@@ -61,20 +63,20 @@ class SessionResource extends AbstractResourceListener
      * @param  mixed $id
      * @return ApiProblem|mixed
      */
-     /*public function fetch($id)
+    /*public function fetch($id)
     {  $pieces = explode(".", $id);
-      $arr["name"]=$pieces[0];
-       $arr["value"]=$pieces[1];
+     $arr["name"]=$pieces[0];
+      $arr["value"]=$pieces[1];
 
-        $List= new Session($this->adapter);
-        return $List->fetch2($arr);
+       $List= new Session($this->adapter);
+       return $List->fetch2($arr);
 
     }
 */
-public function fetch($id)
-    {   $List= new Session($this->adapter);
+    public function fetch($id)
+    {
+        $List= new Session($this->adapter);
         return $List->fetch($id);
-
     }
     /**
      * Fetch all or a subset of resources
@@ -96,7 +98,7 @@ public function fetch($id)
      * @param  mixed $data
      * @return ApiProblem|mixed
      */
-    public function patch($id,$data)
+    public function patch($id, $data)
     {
         return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
     }
@@ -131,16 +133,14 @@ public function fetch($id)
      * @return ApiProblem|mixed
      */
     public function update($id, $data)
-    {   $List= new Session($this->adapter);
+    {
+        $List= new Session($this->adapter);
         $fetch=$List->fetch($id);
         $array=(array)$data;
-      if (empty($fetch))
-      {
-        return new ApiProblem(405, $id.' dont exist');
-      }
-      else{
-        
-        return $List->Update($array,$id);
-    }
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' dont exist');
+        } else {
+            return $List->Update($array, $id);
+        }
     }
 }
