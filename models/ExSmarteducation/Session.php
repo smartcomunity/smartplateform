@@ -41,7 +41,13 @@ namespace Models\ExSmarteducation;
         }
         public function Create($data)
         {
-            return $this->TableGateway->insert($data);
+            $arr=[];
+            $this->TableGateway->insert($data);
+            $rowset = $this->TableGateway->select();
+            $results = $rowset->toArray();
+            $arr= array_column($results, 'idSession');
+           
+            return max($arr);
         }
         public function Update($data, $id)
         {

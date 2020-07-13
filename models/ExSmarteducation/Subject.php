@@ -42,9 +42,13 @@ namespace Models\ExSmarteducation;
         }
         public function Create($data)
         {
-            return $this->TableGateway->insert($data);
-            /*$data['operation']='Created';
-            return $data;*/
+            $arr=[];
+            $this->TableGateway->insert($data);
+            $rowset = $this->TableGateway->select();
+            $results = $rowset->toArray();
+            $arr= array_column($results, 'idsubject');
+           
+            return max($arr);
         }
         public function Update($data, $id)
         {

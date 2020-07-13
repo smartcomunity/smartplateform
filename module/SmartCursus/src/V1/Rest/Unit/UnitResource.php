@@ -21,9 +21,11 @@ class UnitResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $d=[];
         $List= new Unit($this->adapter);
         $array=(array)$data;
-        return $List->Create($array);
+        $d['idunit']=$List->Create($array);
+        return $d ;
     }
 
     /**

@@ -176,7 +176,6 @@ namespace Models\ExSmarteducation;
             for ($k = 0; $k < count($arr2); $k++) {
                 $ok=false;
                 $arr7=[];
-                
                 $n=0;
                 foreach ($arr2 as $key => $value) {
                     foreach ($value as $sub_key => $sub_val) {
@@ -196,77 +195,62 @@ namespace Models\ExSmarteducation;
                         }
                     }
                 }
-                $n=$n-1;
+                //$n=$n-1;
                 //
-                for ($e=0;$e<$n;$e++) {
-                    $idunit=$arr7[$e]['idunit'];
-                    $results6=$this->adapter->query(
-                        'SELECT * FROM  subject  AS s
-                       where s.unit_id ="'.$idunit.'"',
-                        Adapter::QUERY_MODE_EXECUTE
-                    );
-                    $results6=$results6->toArray();
-                    
-                    // $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$index]['Degree_id']);
-                    $index=$arr7[$e]['index'];
-                    $l=0;
-                    $m=0;
-                    //while ($l<count($keys)) {
-                    $x=$keys[$l];
-                    $l++;
-                    foreach ($results6 as $key6 => $row6) {
-                        $arr6[$m]["idsubject"]=$row6 ['idsubject'];
-                        $arr6[$m]["subjectlabel"]=$row6 ['subjectlabel'];
-                        $arr6[$m]["subjectCoefficient"]=$row6 ['subjectCoefficient'];
-                        $arr6[$m]["subjectcredit"]=$row6 ['subjectcredit'];
-                        $arr6[$m]["subjectRegimen"]=$row6 ['subjectRegimen'];
-                        $arr6[$m]["hourlyVolume"]=$row6 ['hourlyVolume'];
-                        $arr6[$m]["unit_id"]=$row6 ['unit_id'];
+            }
+            /////////////////////////////////////////////////////////////////////////////////////////////
+            for ($e=0;$e<count($arr7);$e++) {
+                $idunit=$arr7[$e]['idunit'];
+                $index=$arr7[$e]['index'];
+                $results6=$this->adapter->query(
+                    'SELECT * FROM  subject  AS s
+                   where s.unit_id ="'.$idunit.'"',
+                    Adapter::QUERY_MODE_EXECUTE
+                );
+                $results6=$results6->toArray();
+                $m=0;
+                foreach ($results6 as $key6 => $row6) {
+                    $arr6[$m]["idsubject"]=$row6 ['idsubject'];
+                    $arr6[$m]["subjectlabel"]=$row6 ['subjectlabel'];
+                    $arr6[$m]["subjectCoefficient"]=$row6 ['subjectCoefficient'];
+                    $arr6[$m]["subjectcredit"]=$row6 ['subjectcredit'];
+                    $arr6[$m]["subjectRegimen"]=$row6 ['subjectRegimen'];
+                    $arr6[$m]["hourlyVolume"]=$row6 ['hourlyVolume'];
+                    $arr6[$m]["unit_id"]=$row6 ['unit_id'];
+                    $m++;
+                }
+                if (empty($arr[$index]["subject"])) {
+                    $arr[$index]["subject"]=$arr6;
+                    $arr6=array();
+                } else {
+                    $arr10=[];
+                    $arr10=$arr[$index]["subject"];
+                    unset($arr[$index]["subject"]);
+                    //$counter=count($arr10);
+                    //$arr9[$counter]=$arr5;
+                    foreach ($arr10 as $key10 => $row10) {
+                        $arr6[$m]["idsubject"]=$row10 ['idsubject'];
+                        $arr6[$m]["subjectlabel"]=$row10 ['subjectlabel'];
+                        $arr6[$m]["subjectCoefficient"]=$row10 ['subjectCoefficient'];
+                        $arr6[$m]["subjectcredit"]=$row10 ['subjectcredit'];
+                        $arr6[$m]["subjectRegimen"]=$row10 ['subjectRegimen'];
+                        $arr6[$m]["hourlyVolume"]=$row10 ['hourlyVolume'];
+                        $arr6[$m]["unit_id"]=$row10 ['unit_id'];
                         $m++;
                     }
-
-                    //$arr[$index]["subject"]=$arr6;
-                    ///////////////////////////////////////////////////////
-    
-                    if (empty($arr[$index]["subject"])) {
-                        $arr[$index]["subject"]=$arr6;
-                        $c=(count($arr6));
-                        while ($c>0) {
-                            $c=$c-1;
-                            unset($arr6[$c]);
-                        }
-                    } else {
-                        $arr10=[];
-                        $arr10=$arr[$index]["subject"];
-                        unset($arr[$index]["subject"]);
-                        $counter=count($arr10);
-                        //$arr9[$counter]=$arr5;
-                        foreach ($arr10 as $key10 => $row10) {
-                            $arr6[$m]["idsubject"]=$row10 ['idsubject'];
-                            $arr6[$m]["subjectlabel"]=$row10 ['subjectlabel'];
-                            $arr6[$m]["subjectCoefficient"]=$row10 ['subjectCoefficient'];
-                            $arr6[$m]["subjectcredit"]=$row10 ['subjectcredit'];
-                            $arr6[$m]["subjectRegimen"]=$row10 ['subjectRegimen'];
-                            $arr6[$m]["hourlyVolume"]=$row10 ['hourlyVolume'];
-                            $arr6[$m]["unit_id"]=$row10 ['unit_id'];
-                            $m++;
-                        }
-                        $arr[$index]["subject"]=$arr6;
-                        $c=(count($arr6));
-                        while ($c>0) {
-                            $c=$c-1;
-                            unset($arr6[$c]);
-                            //  }
-                        }
-                        /////////////////////////////////////////////////////////
-                   /* $c=(count($arr6));
-                    while ($c>0) {
-                        $c=$c-1;
-                        unset($arr6[$c]);
-                    }*/
-                    }
+                    //$arr6=array_unique($arr6);
+                    $arr6 = array_map("unserialize", array_unique(array_map("serialize", $arr6)));
+                    $arr[$index]["subject"]=$arr6;
+                    $arr6=array();
                 }
+                //$arr6=array();
+                /*$c=(count($arr6));
+                while ($c>=0) {
+                    $c=$c-1;
+                    unset($arr6[$c]);
+                }*/
             }
+            /////////////////////////////////////////////////////////////////////////////////////////////
            
             
             return $arr;

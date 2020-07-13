@@ -21,9 +21,11 @@ class SubjectResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $d=[];
         $List= new Subject($this->adapter);
         $array=(array)$data;
-        return $List->Create($array);
+        $d['idsubject']=$List->Create($array);
+        return $d ;
     }
 
     /**

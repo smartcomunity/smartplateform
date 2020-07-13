@@ -22,9 +22,11 @@ class SessionResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $d=[];
         $List= new Session($this->adapter);
         $array=(array)$data;
-        return $List->Create($array);
+        $d['idSession']=$List->Create($array);
+        return $d ;
     }
 
     /**
