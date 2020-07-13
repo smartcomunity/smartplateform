@@ -147,6 +147,7 @@ namespace Models\ExSmarteducation;
                     }
                     if (empty($arr[$x]["Unit"])) {
                         $arr[$x]["Unit"]=$arr5;
+                        $arr5=array();
                     } else {
                         $arr9=[];
                         $arr9=$arr[$x]["Unit"];
@@ -164,41 +165,22 @@ namespace Models\ExSmarteducation;
                             $m++;
                         }
                         $arr[$x]["Unit"]=$arr5;
-                    }
-                    $c=(count($arr5));
-                    while ($c>=0) {
-                        $c=$c-1;
-                        unset($arr5[$c]);
+                        $arr5=array();
                     }
                 }
             }
             //subject part
-            for ($k = 0; $k < count($arr2); $k++) {
-                $ok=false;
-                $arr7=[];
-                $n=0;
-                foreach ($arr2 as $key => $value) {
-                    foreach ($value as $sub_key => $sub_val) {
-                        if (is_array($sub_val)) {
-                            foreach ($sub_val as $k1 => $v) {
-                                $ke = array_keys(array_column($arr2, 'idunit'), $sub_val);
-                                $a=0;
-                                while ($a< count($ke)) {
-                                    $x=$ke[$a];
-                                    $a++;
-                                    $arr7[$n]=$v;
-                                    $arr7[$n]['index']=$key;
-                                    $n++;
-                                }
-                                $ok=true;
-                            }
-                        }
-                    }
+            $arr7=[];
+            $arr11=[];
+            $n=0;
+            foreach ($arr as $key => $value) {
+                $arr11=array_column($value['Unit'], 'idunit');
+                foreach ($arr11 as $key11 => $value11) {
+                    $arr7[$n]['idunit']=$value11;
+                    $arr7[$n]['index']=$key;
+                    $n++;
                 }
-                //$n=$n-1;
-                //
             }
-            /////////////////////////////////////////////////////////////////////////////////////////////
             for ($e=0;$e<count($arr7);$e++) {
                 $idunit=$arr7[$e]['idunit'];
                 $index=$arr7[$e]['index'];
@@ -209,6 +191,7 @@ namespace Models\ExSmarteducation;
                 );
                 $results6=$results6->toArray();
                 $m=0;
+                $arr6=[];
                 foreach ($results6 as $key6 => $row6) {
                     $arr6[$m]["idsubject"]=$row6 ['idsubject'];
                     $arr6[$m]["subjectlabel"]=$row6 ['subjectlabel'];
@@ -226,8 +209,6 @@ namespace Models\ExSmarteducation;
                     $arr10=[];
                     $arr10=$arr[$index]["subject"];
                     unset($arr[$index]["subject"]);
-                    //$counter=count($arr10);
-                    //$arr9[$counter]=$arr5;
                     foreach ($arr10 as $key10 => $row10) {
                         $arr6[$m]["idsubject"]=$row10 ['idsubject'];
                         $arr6[$m]["subjectlabel"]=$row10 ['subjectlabel'];
@@ -238,21 +219,11 @@ namespace Models\ExSmarteducation;
                         $arr6[$m]["unit_id"]=$row10 ['unit_id'];
                         $m++;
                     }
-                    //$arr6=array_unique($arr6);
                     $arr6 = array_map("unserialize", array_unique(array_map("serialize", $arr6)));
                     $arr[$index]["subject"]=$arr6;
                     $arr6=array();
                 }
-                //$arr6=array();
-                /*$c=(count($arr6));
-                while ($c>=0) {
-                    $c=$c-1;
-                    unset($arr6[$c]);
-                }*/
             }
-            /////////////////////////////////////////////////////////////////////////////////////////////
-           
-            
             return $arr;
         }
 
