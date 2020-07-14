@@ -110,12 +110,31 @@ namespace Models\ExSmarteducation;
                     }
                     $x=$keys[$l];
                     $l++;
-                    $arr[$x]["session"]=$arr3;
-                    $c=(count($arr3));
-                    while ($m<$c) {
-                        $c=$c-1;
-                        unset($arr3[$c]);
+                    /* $arr[$x]["session"]=$arr3;
+                     $c=(count($arr3));
+                     while ($m<$c) {
+                         $c=$c-1;
+                         unset($arr3[$c]);
+                     }*/
+                    ////////////////////////////////////////////////////////
+                    if (empty($arr[$x]["session"])) {
+                        $arr[$x]["session"]=$arr3;
+                        $arr3=array();
+                    } else {
+                        $arr11=[];
+                        $arr11=$arr[$x]["session"];
+                        unset($arr[$x]["session"]);
+                        foreach ($arr11 as $key11 => $row11) {
+                            $arr3[$m]["Session_id"]=$row11 ['Session_id'];
+                            $arr3[$m]["SessionType"]=$row11 ['SessionType'];
+                            $arr3[$m]["SessionNumber"]=$row11 ['SessionNumber'];
+                            $m++;
+                        }
+                        $arr3 = array_map("unserialize", array_unique(array_map("serialize", $arr3)));
+                        $arr[$x]["session"]=$arr3;
+                        $arr3=array();
                     }
+                    ///////////////////////////////////////////////////////////
                 }
             }
             //unit part
@@ -229,45 +248,8 @@ namespace Models\ExSmarteducation;
 
         public function fetch($id)
         {
-            $arr=[];
-            $results1=$this->adapter->query(
-                'SELECT * FROM  degree  AS d 
-                 LEFT JOIN elementmetaprocess  AS e ON d.Model_id =e.id 
-                 RIGHT JOIN session AS s ON d.idDegree =s.Degree_id 
-                 where d.idDegree ="'.$id.'"',
-                Adapter::QUERY_MODE_EXECUTE
-            );
-            $results1=$results1->toArray();
-            $i=0;
-            foreach ($results1 as $key => $row) {
-                $idSession=$row['idSession'];
-                $results2=$this->adapter->query(
-                    'SELECT * FROM  unit  AS u 
-                 LEFT JOIN session  AS s ON u.Session_id =s.idSession 
-                 RIGHT JOIN subject AS su ON u.idunit =su.unit_id 
-                 where u.Session_id ="'.$idSession.'"',
-                    Adapter::QUERY_MODE_EXECUTE
-                );
-                $results2=$results2->toArray();
-                $arr[$i]["idDegree"]=$row ['idDegree'];
-                $arr[$i]["Model_id"]=$row ['Model_id'];
-                $arr[$i]["degreeLabel"]=$row ['degreeLabel'];
-                $arr[$i]["MetaModelsWorker_id"]=$row ['MetaModelsWorker_id'];
-                $arr[$i]["MetaContext_id"]=$row ['MetaContext_id'];
-                $arr[$i]["LabelMetaProcess"]=$row ['LabelMetaProcess'];
-                $arr[$i]["DescMetaProcess"]=$row ['DescMetaProcess'];
-                $arr[$i]["model_type"]=$row ['model_type'];
-                $arr[$i]["Field"]=$row ['Field'];
-                $arr[$i]["Mention"]=$row ['Mention'];
-                $arr[$i]["Specialty"]=$row ['Specialty'];
-                $arr[$i]["Nb_years"]=$row ['Nb_years'];
-                $arr[$i]["Calendar_sys"]=$row ['Calendar_sys'];
-                $arr[$i]["nb_units"]=$row ['nb_units'];
-                $arr[$i]["credit"]=$row ['credit'];
-                $arr[$i]["S.U.S"]=$results2;
-                $i++;
-            }
-            return $arr;
+            $rowset  = $this->TableGateway->select(['idDegree' => $id]);
+            return $Row   = $rowset->current();
         }
         public function fetchByEveryThing($data)
         {
