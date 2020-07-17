@@ -90,20 +90,22 @@ namespace Models\ExSmarteducation;
             }
             //session part
             for ($k = 0; $k < count($arr2); $k++) {
-                $results3=$this->adapter->query(
-                    'SELECT * FROM  unit  AS u 
-                     LEFT JOIN session  AS s ON u.Session_id =s.idSession 
+                /*$results3=$this->adapter->query(
+                    'SELECT * FROM  unit  AS u
+                     LEFT JOIN session  AS s ON u.Session_id =s.idSession
                      where u.Session_id ="'.$arr2[$k]['idSession'].'"',
                     Adapter::QUERY_MODE_EXECUTE
                 );
-                
-                $results3=$results3->toArray();
+
+                $results3=$results3->toArray();*/
+                $rowset2= $this->TableGateway2->select(['idSession' => $arr2[$k]['idSession']]);
+                $results3 = $rowset2->toArray();
                 $keys = array_keys(array_column($arr, 'idDegree'), $arr2[$k]['Degree_id']);
                 $l=0;
                 $m=0;
                 while ($l< count($keys)) {
                     foreach ($results3 as $key3 => $row3) {
-                        $arr3[$m]["Session_id"]=$row3 ['Session_id'];
+                        $arr3[$m]["Session_id"]=$row3 ['idSession'];
                         $arr3[$m]["SessionType"]=$row3 ['SessionType'];
                         $arr3[$m]["SessionNumber"]=$row3 ['SessionNumber'];
                         $m++;
