@@ -7,11 +7,12 @@ use Models\ExSmarteducation\User;
 use Laminas\Db\Adapter\AdapterInterface;
 
 class UserResource extends AbstractResourceListener
-{ private $adapter;
+{
+    private $adapter;
    
     
     public function __construct(AdapterInterface $adapter)
-    {  
+    {
         $this->adapter = $adapter;
     }
     /**
@@ -21,22 +22,20 @@ class UserResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function create($data)
-    { $List= new User($this->adapter);
-       $options = [
+    {
+        $List= new User($this->adapter);
+        $options = [
         'cost' => 10,
     ];
-      $pass=password_hash($data->password, PASSWORD_BCRYPT, $options);
-      $fetch=$List->fetch($data->username);
-      $data->password=$pass;
+        $pass=password_hash($data->password, PASSWORD_BCRYPT, $options);
+        $fetch=$List->fetch($data->username);
+        $data->password=$pass;
         $array=(array)$data;
-          if (empty($fetch))
-        {  return $List->Create($array);
-          
+        if (empty($fetch)) {
+            return $List->Create($array);
+        } else {
+            return new ApiProblem(405, $data->username.' already taken');
         }
-        else{
-        return new ApiProblem(405, $data->username.' already taken');}
-    
-        
     }
 
     /**
@@ -46,15 +45,15 @@ class UserResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function delete($id)
-    {  $List= new User($this->adapter);
+    {
+        $List= new User($this->adapter);
         $fetch=$List->fetch($id);
-        if (empty($fetch))
-      {
-        return new ApiProblem(405, $id.' dont exist');
-      }
-      else{
-        return $List->Delete($id);
-      }
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' Not Found');
+        } else {
+            $List->Delete($id);
+            return true;
+        }
         //return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
@@ -76,7 +75,8 @@ class UserResource extends AbstractResourceListener
      * @return ApiProblem|mixed
      */
     public function fetch($id)
-    {   $List= new User($this->adapter);
+    {
+        $List= new User($this->adapter);
         return $List->fetch($id);
     }
 
@@ -88,7 +88,8 @@ class UserResource extends AbstractResourceListener
      */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        $List= new User($this->adapter);
+        return $List->fetchAll();
     }
 
     /**
@@ -132,27 +133,26 @@ class UserResource extends AbstractResourceListener
      * @param  mixed $data
      * @return ApiProblem|mixed
     */
-            public function update($id, $data)
-            {   $List= new User($this->adapter);
-                $fetch=$List->fetch($id);
+    public function update($id, $data)
+    {
+        $List= new User($this->adapter);
+        $fetch=$List->fetch($id);
                 
-              if (empty($fetch))
-              {
-                return new ApiProblem(405, $id.' dont exist');
-              }
-              else{
-                if (empty($data->password)){ 
-                    $array=(array)$data;
-                    return $List->Update($array,$id);}
-                else{
-                    $options = [
+        if (empty($fetch)) {
+            return new ApiProblem(405, $id.' dont exist');
+        } else {
+            if (empty($data->password)) {
+                $array=(array)$data;
+                return $List->Update($array, $id);
+            } else {
+                $options = [
                     'cost' => 10,
                 ];
-                  $pass=password_hash($data->password, PASSWORD_BCRYPT, $options);
-                  $data->password=$pass;
-                  $array=(array)$data;
-                return $List->Update($array,$id);
+                $pass=password_hash($data->password, PASSWORD_BCRYPT, $options);
+                $data->password=$pass;
+                $array=(array)$data;
+                return $List->Update($array, $id);
             }
-            }
-}
+        }
+    }
 }
