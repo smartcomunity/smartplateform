@@ -39,7 +39,7 @@ namespace Models\ExSmarteducation;
             $rowset  = $this->TableGateway->select(['username' => $id]);
             $results = $rowset->toArray();
             foreach ($results as $key => $row) {
-                $arr[0]["UserType"]=$row['UserType'];
+                $arr[0]["userType"]=$row['userType'];
             }
             return $arr;
         }
